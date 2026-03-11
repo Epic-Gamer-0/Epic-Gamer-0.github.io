@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MECHATRONICS DASHBOARD // R&amp;D TERMINAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:     #00f0ff;
+      --cyan-dim: #006e75;
+      --green:    #00ff88;
+      --red:      #ff2244;
+      --bg:       #050508;
+      --bg2:      #0c0c12;
+      --bg3:      #111118;
+      --border:   #00f0ff;
+      --text:     #b0e8ee;
+      --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+      --font-head: 'Orbitron', 'Share Tech Mono', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* scanline overlay */
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,240,255,0.015) 2px,
+          rgba(0,240,255,0.015) 4px
+        );
+    }
+
+    /* ─── SCROLLBAR ────────────────────────────────────────────── */
+    ::-webkit-scrollbar              { width: 6px; }
+    ::-webkit-scrollbar-track        { background: var(--bg); }
+    ::-webkit-scrollbar-thumb        { background: var(--cyan-dim); border-radius: 0; }
+    ::-webkit-scrollbar-thumb:hover  { background: var(--cyan); }
+
+    /* ─── HEADER / NAV BAR ─────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5,5,8,0.96);
+      border-bottom: 1px solid var(--cyan);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 0 18px rgba(0,240,255,0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    .header-logo {
+      font-family: var(--font-head);
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      font-weight: 900;
+      color: var(--cyan);
+      letter-spacing: 0.18em;
+      text-shadow: 0 0 12px var(--cyan);
+      white-space: nowrap;
+    }
+
+    .header-status {
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: blink 1.4s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.1; }
+    }
+
+    /* ─── LAYOUT ───────────────────────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* ─── PANEL / CARD ─────────────────────────────────────────── */
+    .panel {
+      background: var(--bg2);
+      border: 1px solid var(--cyan);
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.08),
+                  0 0 24px rgba(0,240,255,0.07);
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 20px;
+      width: 60px; height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    .panel-header {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--cyan-dim);
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .panel-title {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(0,240,255,0.5);
+    }
+
+    .panel-badge {
+      font-size: 0.6rem;
+      padding: 0.1em 0.55em;
+      border: 1px solid var(--cyan-dim);
+      color: var(--cyan-dim);
+      letter-spacing: 0.12em;
+      margin-left: auto;
+    }
+
+    .panel-body { padding: 1.25rem; }
+
+    /* ─── HERO TITLE ───────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin-top: 2.5rem;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--cyan-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      line-height: 1.1;
+      color: var(--cyan);
+      text-shadow:
+        0 0 8px var(--cyan),
+        0 0 40px rgba(0,240,255,0.3);
+    }
+
+    .hero-sub {
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.25em;
+      color: rgba(176,232,238,0.55);
+      margin-top: 0.9rem;
+    }
+
+    /* glitch animation on hero title */
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      overflow: hidden;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--red);
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+      animation: glitch-1 4s infinite linear alternate-reverse;
+      opacity: 0.7;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: 2px 0 #ff00c8;
+      clip-path: polygon(0 65%, 100% 65%, 100% 80%, 0 80%);
+      animation: glitch-2 3.5s infinite linear alternate-reverse;
+      opacity: 0.7;
+    }
+
+    @keyframes glitch-1 {
+      0%   { clip-path: polygon(0 2%,  100% 2%,  100% 5%,  0 5%);  transform: translateX(2px); }
+      20%  { clip-path: polygon(0 15%, 100% 15%, 100% 19%, 0 19%); transform: translateX(-2px); }
+      40%  { clip-path: polygon(0 33%, 100% 33%, 100% 36%, 0 36%); transform: translateX(1px); }
+      60%  { clip-path: polygon(0 52%, 100% 52%, 100% 55%, 0 55%); transform: translateX(-1px); }
+      80%  { clip-path: polygon(0 73%, 100% 73%, 100% 77%, 0 77%); transform: translateX(2px); }
+      100% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); transform: translateX(-2px); }
+    }
+
+    @keyframes glitch-2 {
+      0%   { clip-path: polygon(0 8%,  100% 8%,  100% 12%, 0 12%); transform: translateX(-2px); }
+      25%  { clip-path: polygon(0 25%, 100% 25%, 100% 28%, 0 28%); transform: translateX(2px); }
+      50%  { clip-path: polygon(0 45%, 100% 45%, 100% 49%, 0 49%); transform: translateX(-1px); }
+      75%  { clip-path: polygon(0 68%, 100% 68%, 100% 71%, 0 71%); transform: translateX(1px); }
+      100% { clip-path: polygon(0 83%, 100% 83%, 100% 88%, 0 88%); transform: translateX(-2px); }
+    }
+
+    /* ─── SYSTEM METRICS (decorative readouts) ────────────────── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--cyan-dim);
+    }
+
+    .metric {
+      background: var(--bg3);
+      padding: 0.8rem 1rem;
+      border-right: 1px solid var(--cyan-dim);
+    }
+
+    .metric:last-child { border-right: none; }
+
+    .metric-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--cyan-dim);
+      margin-bottom: 0.3rem;
+    }
+
+    .metric-value {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,240,255,0.4);
+    }
+
+    .metric-unit {
+      font-size: 0.6rem;
+      color: var(--cyan-dim);
+      margin-left: 0.25em;
+    }
+
+    /* animated counter */
+    @keyframes count-flicker {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.7; }
+    }
+
+    .metric-value { animation: count-flicker 2.5s ease-in-out infinite; }
+
+    /* progress bar */
+    .bar-wrap {
+      height: 4px;
+      background: rgba(0,240,255,0.1);
+      margin-top: 0.4rem;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      animation: bar-pulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes bar-pulse {
+      from { opacity: 0.5; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── ANALOG INPUT SECTION ─────────────────────────────────── */
+    .analog-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .analog-grid { grid-template-columns: 1fr; }
+    }
+
+    /* knob container */
+    .knob-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .knob-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .knob-svg { cursor: pointer; }
+
+    .knob-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--cyan-dim);
+      text-align: center;
+    }
+
+    .knob-readout {
+      font-size: 0.65rem;
+      color: var(--cyan);
+      min-width: 3ch;
+      text-align: center;
+    }
+
+    /* slider bank */
+    .slider-bank {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .slider-name {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--cyan-dim);
+      min-width: 6ch;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 3px;
+      background: var(--bg3);
+      border: 1px solid var(--cyan-dim);
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 12px; height: 12px;
+      background: var(--cyan);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    .slider-val {
+      font-size: 0.62rem;
+      color: var(--cyan);
+      min-width: 4ch;
+      text-align: right;
+    }
+
+    /* ─── CIRCUIT SKETCH CANVAS ────────────────────────────────── */
+    .canvas-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.25rem;
+      border-bottom: 1px solid var(--cyan-dim);
+      background: rgba(0,0,0,0.35);
+    }
+
+    .toolbar-btn {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid var(--cyan-dim);
+      padding: 0.25em 0.7em;
+      cursor: pointer;
+      transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+      text-transform: uppercase;
+    }
+
+    .toolbar-btn:hover,
+    .toolbar-btn.active {
+      background: rgba(0,240,255,0.12);
+      box-shadow: 0 0 8px rgba(0,240,255,0.3);
+      color: #fff;
+    }
+
+    .toolbar-sep {
+      width: 1px; height: 18px;
+      background: var(--cyan-dim);
+      margin: 0 0.1rem;
+    }
+
+    .color-swatch {
+      width: 16px; height: 16px;
+      border: 1px solid var(--cyan-dim);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: box-shadow 0.15s;
+    }
+
+    .color-swatch:hover,
+    .color-swatch.active {
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    .brush-size-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--cyan-dim);
+    }
+
+    .brush-size-wrap input[type="range"] {
+      width: 70px;
+    }
+
+    #circuit-canvas {
+      display: block;
+      width: 100%;
+      /* height set via JS based on aspect ratio */
+      cursor: crosshair;
+      background: #020205;
+      touch-action: none;
+    }
+
+    .canvas-hint {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--cyan-dim);
+      padding: 0.4rem 1.25rem;
+      border-top: 1px solid rgba(0,240,255,0.1);
+      background: rgba(0,0,0,0.3);
+    }
+
+    /* ─── FORM SECTION ─────────────────────────────────────────── */
+    .form-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .field-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: var(--cyan-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .field-label::before {
+      content: '//';
+      color: rgba(0,240,255,0.3);
+    }
+
+    textarea#encrypted-message {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--cyan-dim);
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      padding: 0.75rem 1rem;
+      resize: vertical;
+      min-height: 130px;
+      outline: none;
+      caret-color: var(--cyan);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea#encrypted-message::placeholder {
+      color: rgba(0,240,255,0.2);
+      font-size: 0.75rem;
+    }
+
+    textarea#encrypted-message:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 1px var(--cyan), 0 0 14px rgba(0,240,255,0.15);
+    }
+
+    /* ─── TRANSMIT BUTTON ──────────────────────────────────────── */
+    .transmit-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #transmit-btn {
+      position: relative;
+      font-family: var(--font-head);
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      color: #000;
+      background: var(--cyan);
+      border: none;
+      padding: 1rem 3.5rem;
+      cursor: pointer;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      text-transform: uppercase;
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+      box-shadow: 0 0 20px rgba(0,240,255,0.4), 0 0 60px rgba(0,240,255,0.1);
+    }
+
+    #transmit-btn:hover {
+      background: #fff;
+      box-shadow: 0 0 30px rgba(0,240,255,0.7), 0 0 80px rgba(0,240,255,0.2);
+      transform: translateY(-1px);
+    }
+
+    #transmit-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 0 10px rgba(0,240,255,0.4);
+    }
+
+    #transmit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* loading animation on button */
+    #transmit-btn.sending::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: sweep 0.8s linear infinite;
+    }
+
+    @keyframes sweep {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(100%); }
+    }
+
+    .form-status {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      min-height: 1.2em;
+      text-align: center;
+    }
+
+    .form-status.ok  { color: var(--green); }
+    .form-status.err { color: var(--red); }
+
+    /* ─── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--cyan-dim);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      color: var(--cyan-dim);
+    }
+
+    /* ─── RESPONSIVE TWEAKS ────────────────────────────────────── */
+    @media (max-width: 480px) {
+      main { padding: 1.25rem 0.75rem 3rem; gap: 1.75rem; }
+      .panel-body { padding: 0.9rem; }
+      .canvas-toolbar { gap: 0.4rem; }
+      #transmit-btn { padding: 0.85rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ░░ HEADER ░░ -->
+<header>
+  <div class="header-logo">MECH-DASH // v2.4.7</div>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    SECURE LINK ACTIVE
+  </div>
+</header>
+
+<!-- ░░ MAIN ░░ -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Dashboard title">
+    <div class="hero-label">// CLASSIFIED R&amp;D TERMINAL — SECTOR 7G //</div>
+    <h1 class="hero-title">
+      <span class="glitch" data-text="MECHATRONICS">MECHATRONICS</span><br>
+      <span class="glitch" data-text="DASHBOARD">DASHBOARD</span>
+    </h1>
+    <p class="hero-sub">NEURAL-LINK INTERFACE &nbsp;|&nbsp; BUILD 2024.03 &nbsp;|&nbsp; EYES ONLY</p>
+  </section>
+
+  <!-- SYSTEM METRICS -->
+  <section class="panel" aria-label="System metrics">
+    <div class="panel-header">
+      <span class="panel-title">System Telemetry</span>
+      <span class="panel-badge">LIVE</span>
+    </div>
+    <div class="panel-body" style="padding:0;">
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-label">CORE TEMP</div>
+          <div class="metric-value" id="m-temp">68.4<span class="metric-unit">°C</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:68%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">VOLTAGE</div>
+          <div class="metric-value" id="m-volt">12.07<span class="metric-unit">V</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">SERVO HZ</div>
+          <div class="metric-value" id="m-hz">440<span class="metric-unit">Hz</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:44%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">DATA FLUX</div>
+          <div class="metric-value" id="m-flux">3.1<span class="metric-unit">Mb/s</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">UPTIME</div>
+          <div class="metric-value" id="m-uptime">00:00:00</div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:100%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE ANALOG INPUT -->
+  <section class="panel" aria-label="Interactive analog input">
+    <div class="panel-header">
+      <span class="panel-title">⌬ Interactive Analog Input</span>
+      <span class="panel-badge">HARDWARE</span>
+    </div>
+    <div class="panel-body">
+      <div class="analog-grid">
+
+        <!-- KNOBS -->
+        <div>
+          <div class="field-label">Rotary Controllers</div>
+          <div class="knob-bank" id="knob-bank">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- SLIDERS -->
+        <div>
+          <div class="field-label">Signal Channels</div>
+          <div class="slider-bank" id="slider-bank">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CIRCUIT SKETCH CANVAS -->
+  <section class="panel" aria-label="Circuit sketches drawing canvas">
+    <div class="panel-header">
+      <span class="panel-title">◈ Circuit Sketches</span>
+      <span class="panel-badge">ANALOG DRAW</span>
+    </div>
+
+    <div class="canvas-toolbar" role="toolbar" aria-label="Drawing tools">
+      <!-- Brush colors -->
+      <div class="color-swatch active" data-color="#00f0ff" style="background:#00f0ff; color:#00f0ff;" title="Cyan" aria-label="Cyan brush"></div>
+      <div class="color-swatch" data-color="#00ff88" style="background:#00ff88; color:#00ff88;" title="Green" aria-label="Green brush"></div>
+      <div class="color-swatch" data-color="#ff2244" style="background:#ff2244; color:#ff2244;" title="Red" aria-label="Red brush"></div>
+      <div class="color-swatch" data-color="#ff00c8" style="background:#ff00c8; color:#ff00c8;" title="Magenta" aria-label="Magenta brush"></div>
+      <div class="color-swatch" data-color="#ffffff" style="background:#ffffff; color:#ffffff;" title="White" aria-label="White brush"></div>
+      <div class="toolbar-sep"></div>
+
+      <!-- Brush size -->
+      <div class="brush-size-wrap">
+        <span>SIZE</span>
+        <input type="range" id="brush-size" min="1" max="20" value="3" aria-label="Brush size" />
+        <span id="brush-size-val">3</span>
+      </div>
+      <div class="toolbar-sep"></div>
+
+      <!-- Tools -->
+      <button class="toolbar-btn active" id="btn-draw" aria-pressed="true">Draw</button>
+      <button class="toolbar-btn" id="btn-erase" aria-pressed="false">Erase</button>
+      <div class="toolbar-sep"></div>
+      <button class="toolbar-btn" id="btn-undo">Undo</button>
+      <button class="toolbar-btn" id="btn-clear">Clear</button>
+    </div>
+
+    <canvas id="circuit-canvas" aria-label="Circuit sketch drawing area"></canvas>
+    <div class="canvas-hint">// DRAW CIRCUIT SCHEMATICS, ANNOTATIONS, OR VISUAL NOTES //</div>
+  </section>
+
+  <!-- TRANSMISSION FORM -->
+  <section class="panel" aria-label="Transmission form">
+    <div class="panel-header">
+      <span class="panel-title">⬡ Transmission Console</span>
+      <span class="panel-badge">FORMSPREE</span>
+    </div>
+    <div class="panel-body">
+      <form id="transmission-form" class="form-area" novalidate>
+
+        <!-- Hidden fields for Formspree -->
+        <input type="hidden" name="_subject" value="[MECHDASH] Encrypted Transmission" />
+        <input type="hidden" id="canvas-data-field" name="circuit_sketch" value="" />
+        <input type="hidden" id="knob-data-field"   name="knob_values"    value="" />
+        <input type="hidden" id="slider-data-field" name="slider_values"  value="" />
+
+        <!-- Encrypted message -->
+        <div>
+          <label for="encrypted-message" class="field-label">Encrypted Message</label>
+          <textarea
+            id="encrypted-message"
+            name="encrypted_message"
+            rows="6"
+            placeholder="&gt; ENTER ENCRYPTED MESSAGE HERE..."
+            aria-label="Encrypted message input"
+          ></textarea>
+        </div>
+
+        <!-- Transmit -->
+        <div class="transmit-wrap">
+          <button type="submit" id="transmit-btn">TRANSMIT</button>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer>
+  <span>MECHATRONICS DASHBOARD // CLASSIFIED R&amp;D</span>
+  <span id="footer-time"></span>
+</footer>
+
+<!-- ░░ SCRIPTS ░░ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Formspree endpoint ─────────────────────────────────────────
+   * ACTION REQUIRED: replace YOUR_FORM_ID with the ID from your
+   * Formspree dashboard (https://formspree.io/forms).
+   * Example: 'https://formspree.io/f/abcdefgh'
+   * Without a valid ID the TRANSMIT button will return an error.
+   * ────────────────────────────────────────────────────────────── */
+  const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  /* ── Uptime clock ───────────────────────────────────────────── */
+  const startTime = Date.now();
+
+  function padZ(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const h = Math.floor(elapsed / 3600);
+    const m = Math.floor((elapsed % 3600) / 60);
+    const s = elapsed % 60;
+    const el = document.getElementById('m-uptime');
+    if (el) el.textContent = padZ(h) + ':' + padZ(m) + ':' + padZ(s);
+
+    const ft = document.getElementById('footer-time');
+    if (ft) ft.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+  }
+
+  setInterval(tick, 1000);
+  tick();
+
+  /* ── Jitter telemetry readouts ──────────────────────────────── */
+  function jitter(base, range, decimals) {
+    return (base + (Math.random() - 0.5) * range).toFixed(decimals);
+  }
+
+  function updateTelemetry() {
+    const temp = document.getElementById('m-temp');
+    const volt = document.getElementById('m-volt');
+    const hz   = document.getElementById('m-hz');
+    const flux = document.getElementById('m-flux');
+
+    if (temp) temp.innerHTML = jitter(68, 4, 1) + '<span class="metric-unit">°C</span>';
+    if (volt) volt.innerHTML = jitter(12.07, 0.08, 2) + '<span class="metric-unit">V</span>';
+    if (hz)   hz.innerHTML   = jitter(440, 12, 0) + '<span class="metric-unit">Hz</span>';
+    if (flux) flux.innerHTML = jitter(3.1, 1.2, 1) + '<span class="metric-unit">Mb/s</span>';
+  }
+
+  setInterval(updateTelemetry, 1800);
+
+  /* ── Analog knobs ───────────────────────────────────────────── */
+  const KNOB_DEFS = [
+    { label: 'GAIN',  min: 0, max: 100, val: 62 },
+    { label: 'FREQ',  min: 0, max: 100, val: 35 },
+    { label: 'PHASE', min: 0, max: 100, val: 80 },
+    { label: 'DAMP',  min: 0, max: 100, val: 47 },
+  ];
+
+  const KNOB_R    = 28;   // outer radius
+  const KNOB_SIZE = 70;   // SVG viewport
+
+  function angleForVal(val, min, max) {
+    const pct = (val - min) / (max - min);
+    // knob goes from -135° to +135°  (270° sweep)
+    return -135 + pct * 270;
+  }
+
+  function polarToXY(cx, cy, r, angleDeg) {
+    const rad = (angleDeg - 90) * Math.PI / 180;
+    return {
+      x: cx + r * Math.cos(rad),
+      y: cy + r * Math.sin(rad),
+    };
+  }
+
+  function buildArcPath(cx, cy, r, startDeg, endDeg) {
+    const s = polarToXY(cx, cy, r, startDeg);
+    const e = polarToXY(cx, cy, r, endDeg);
+    const large = Math.abs(endDeg - startDeg) > 180 ? 1 : 0;
+    const sweep = endDeg > startDeg ? 1 : 0;
+    return `M ${s.x} ${s.y} A ${r} ${r} 0 ${large} ${sweep} ${e.x} ${e.y}`;
+  }
+
+  function renderKnob(svgEl, val, min, max) {
+    const cx = KNOB_SIZE / 2, cy = KNOB_SIZE / 2;
+    const trackR = KNOB_R;
+    const pct = (val - min) / (max - min);
+    const valDeg = -135 + pct * 270;
+    const indicator = polarToXY(cx, cy, trackR - 6, valDeg);
+
+    // track arc (full)
+    const trackPath = svgEl.querySelector('.k-track');
+    trackPath.setAttribute('d', buildArcPath(cx, cy, trackR, -135, 135));
+
+    // fill arc (value)
+    const fillPath = svgEl.querySelector('.k-fill');
+    if (valDeg > -135) {
+      fillPath.setAttribute('d', buildArcPath(cx, cy, trackR, -135, valDeg));
+    } else {
+      fillPath.setAttribute('d', '');
+    }
+
+    // indicator dot
+    const dot = svgEl.querySelector('.k-dot');
+    dot.setAttribute('cx', indicator.x);
+    dot.setAttribute('cy', indicator.y);
+  }
+
+  function makeDraggableKnob(svgEl, readoutEl, def) {
+    let dragging = false;
+    let startY = 0;
+    let startVal = def.val;
+
+    function update(newVal) {
+      def.val = Math.min(def.max, Math.max(def.min, newVal));
+      renderKnob(svgEl, def.val, def.min, def.max);
+      readoutEl.textContent = def.val;
+    }
+
+    svgEl.addEventListener('mousedown', (e) => {
+      dragging = true;
+      startY   = e.clientY;
+      startVal = def.val;
+      e.preventDefault();
+    });
+
+    svgEl.addEventListener('touchstart', (e) => {
+      dragging = true;
+      startY   = e.touches[0].clientY;
+      startVal = def.val;
+      e.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const delta = (startY - e.clientY) * 0.8;
+      update(Math.round(startVal + delta));
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      const delta = (startY - e.touches[0].clientY) * 0.8;
+      update(Math.round(startVal + delta));
+    }, { passive: false });
+
+    window.addEventListener('mouseup',  () => { dragging = false; });
+    window.addEventListener('touchend', () => { dragging = false; });
+  }
+
+  const knobBank = document.getElementById('knob-bank');
+
+  KNOB_DEFS.forEach((def) => {
+    const wrap  = document.createElement('div');
+    wrap.className = 'knob-wrap';
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', `0 0 ${KNOB_SIZE} ${KNOB_SIZE}`);
+    svg.setAttribute('width',  KNOB_SIZE);
+    svg.setAttribute('height', KNOB_SIZE);
+    svg.classList.add('knob-svg');
+    svg.setAttribute('role', 'slider');
+    svg.setAttribute('aria-label', def.label + ' knob');
+    svg.setAttribute('aria-valuemin', def.min);
+    svg.setAttribute('aria-valuemax', def.max);
+    svg.setAttribute('aria-valuenow', def.val);
+
+    const cx = KNOB_SIZE / 2, cy = KNOB_SIZE / 2;
+
+    // background circle
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    bg.setAttribute('cx', cx); bg.setAttribute('cy', cy);
+    bg.setAttribute('r', KNOB_R - 2);
+    bg.setAttribute('fill', '#0c0c12');
+    bg.setAttribute('stroke', '#006e75');
+    bg.setAttribute('stroke-width', '1');
+    svg.appendChild(bg);
+
+    // track path
+    const track = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    track.classList.add('k-track');
+    track.setAttribute('fill', 'none');
+    track.setAttribute('stroke', '#003a40');
+    track.setAttribute('stroke-width', '3');
+    track.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(track);
+
+    // fill path
+    const fill = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    fill.classList.add('k-fill');
+    fill.setAttribute('fill', 'none');
+    fill.setAttribute('stroke', '#00f0ff');
+    fill.setAttribute('stroke-width', '3');
+    fill.setAttribute('stroke-linecap', 'round');
+    fill.setAttribute('filter', 'drop-shadow(0 0 3px #00f0ff)');
+    svg.appendChild(fill);
+
+    // indicator dot
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.classList.add('k-dot');
+    dot.setAttribute('r', '3');
+    dot.setAttribute('fill', '#00f0ff');
+    dot.setAttribute('filter', 'drop-shadow(0 0 4px #00f0ff)');
+    svg.appendChild(dot);
+
+    const label   = document.createElement('div');
+    label.className = 'knob-label';
+    label.textContent = def.label;
+
+    const readout = document.createElement('div');
+    readout.className = 'knob-readout';
+    readout.textContent = def.val;
+
+    wrap.appendChild(svg);
+    wrap.appendChild(label);
+    wrap.appendChild(readout);
+    knobBank.appendChild(wrap);
+
+    renderKnob(svg, def.val, def.min, def.max);
+    makeDraggableKnob(svg, readout, def);
+  });
+
+  /* ── Sliders ────────────────────────────────────────────────── */
+  const SLIDER_DEFS = [
+    { name: 'CH-1', val: 72 },
+    { name: 'CH-2', val: 38 },
+    { name: 'CH-3', val: 55 },
+    { name: 'CH-4', val: 90 },
+    { name: 'PWR',  val: 65 },
+  ];
+
+  const sliderBank = document.getElementById('slider-bank');
+
+  SLIDER_DEFS.forEach((def) => {
+    const row  = document.createElement('div');
+    row.className = 'slider-row';
+
+    const name = document.createElement('div');
+    name.className = 'slider-name';
+    name.textContent = def.name;
+
+    const input = document.createElement('input');
+    input.type  = 'range';
+    input.min   = 0;
+    input.max   = 100;
+    input.value = def.val;
+    input.setAttribute('aria-label', def.name + ' channel');
+
+    const val = document.createElement('div');
+    val.className   = 'slider-val';
+    val.textContent = def.val;
+
+    input.addEventListener('input', () => {
+      def.val = parseInt(input.value, 10);
+      val.textContent = def.val;
+    });
+
+    row.appendChild(name);
+    row.appendChild(input);
+    row.appendChild(val);
+    sliderBank.appendChild(row);
+  });
+
+  /* ── Canvas drawing ─────────────────────────────────────────── */
+  const canvas  = document.getElementById('circuit-canvas');
+  const ctx     = canvas.getContext('2d');
+
+  // History for undo
+  const history = [];
+  const MAX_HISTORY = 40;
+
+  let painting  = false;
+  let brushColor = '#00f0ff';
+  let brushSize  = 3;
+  let erasing    = false;
+
+  function resizeCanvas() {
+    const w    = canvas.parentElement.clientWidth;
+    const h    = Math.max(Math.round(w * 0.42), 200);
+    // Preserve drawing: copy to a temp canvas before resizing clears the buffer
+    const tmp  = document.createElement('canvas');
+    tmp.width  = canvas.width;
+    tmp.height = canvas.height;
+    tmp.getContext('2d').drawImage(canvas, 0, 0);
+    canvas.width  = w;
+    canvas.height = h;
+    ctx.drawImage(tmp, 0, 0);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function saveHistory() {
+    if (history.length >= MAX_HISTORY) history.shift();
+    history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+  }
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width  / rect.width;
+    const scaleY = canvas.height / rect.height;
+    if (e.touches) {
+      return {
+        x: (e.touches[0].clientX - rect.left) * scaleX,
+        y: (e.touches[0].clientY - rect.top)  * scaleY,
+      };
+    }
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top)  * scaleY,
+    };
+  }
+
+  function startDraw(e) {
+    painting = true;
+    saveHistory();
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+  }
+
+  function draw(e) {
+    if (!painting) return;
+    const pos = getPos(e);
+    ctx.lineWidth   = brushSize;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    if (erasing) {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.strokeStyle = 'rgba(0,0,0,1)';
+    } else {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = brushColor;
+      ctx.shadowColor = brushColor;
+      ctx.shadowBlur  = brushSize * 1.5;
+    }
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+  }
+
+  function endDraw() {
+    painting = false;
+    ctx.beginPath();
+    ctx.shadowBlur = 0;
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  canvas.addEventListener('mousedown',  startDraw);
+  canvas.addEventListener('mousemove',  draw);
+  canvas.addEventListener('mouseup',    endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove',  draw,      { passive: false });
+  canvas.addEventListener('touchend',   endDraw);
+
+  /* toolbar */
+  const swatches   = document.querySelectorAll('.color-swatch');
+  const btnDraw    = document.getElementById('btn-draw');
+  const btnErase   = document.getElementById('btn-erase');
+  const btnUndo    = document.getElementById('btn-undo');
+  const btnClear   = document.getElementById('btn-clear');
+  const brushInput = document.getElementById('brush-size');
+  const brushValEl = document.getElementById('brush-size-val');
+
+  swatches.forEach((swatch) => {
+    swatch.addEventListener('click', () => {
+      swatches.forEach((s) => s.classList.remove('active'));
+      swatch.classList.add('active');
+      brushColor = swatch.dataset.color;
+      erasing = false;
+      btnDraw.classList.add('active');
+      btnDraw.setAttribute('aria-pressed', 'true');
+      btnErase.classList.remove('active');
+      btnErase.setAttribute('aria-pressed', 'false');
+    });
+  });
+
+  brushInput.addEventListener('input', () => {
+    brushSize = parseInt(brushInput.value, 10);
+    brushValEl.textContent = brushSize;
+  });
+
+  btnDraw.addEventListener('click', () => {
+    erasing = false;
+    btnDraw.classList.add('active');
+    btnDraw.setAttribute('aria-pressed', 'true');
+    btnErase.classList.remove('active');
+    btnErase.setAttribute('aria-pressed', 'false');
+  });
+
+  btnErase.addEventListener('click', () => {
+    erasing = true;
+    btnErase.classList.add('active');
+    btnErase.setAttribute('aria-pressed', 'true');
+    btnDraw.classList.remove('active');
+    btnDraw.setAttribute('aria-pressed', 'false');
+  });
+
+  btnUndo.addEventListener('click', () => {
+    if (history.length === 0) return;
+    const prev = history.pop();
+    ctx.putImageData(prev, 0, 0);
+  });
+
+  btnClear.addEventListener('click', () => {
+    saveHistory();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+
+  /* ── Form submission ────────────────────────────────────────── */
+  const form       = document.getElementById('transmission-form');
+  const statusEl   = document.getElementById('form-status');
+  const submitBtn  = document.getElementById('transmit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Collect canvas as base64 PNG
+    document.getElementById('canvas-data-field').value = canvas.toDataURL('image/png');
+
+    // Collect knob values
+    const knobValues = KNOB_DEFS.map((d) => d.label + ':' + d.val).join(', ');
+    document.getElementById('knob-data-field').value = knobValues;
+
+    // Collect slider values
+    const sliderValues = SLIDER_DEFS.map((d) => d.name + ':' + d.val).join(', ');
+    document.getElementById('slider-data-field').value = sliderValues;
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('sending');
+    statusEl.textContent = '> ENCRYPTING PAYLOAD...';
+    statusEl.className = 'form-status';
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        statusEl.textContent = '> TRANSMISSION SUCCESSFUL. SIGNAL RECEIVED.';
+        statusEl.className = 'form-status ok';
+        form.reset();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        history.length = 0;
+        KNOB_DEFS.forEach((def, i) => {
+          const svg = knobBank.children[i].querySelector('svg');
+          const ro  = knobBank.children[i].querySelector('.knob-readout');
+          renderKnob(svg, def.val, def.min, def.max);
+          ro.textContent = def.val;
+        });
+      } else {
+        let errMsg = 'SERVER REJECTED TRANSMISSION [' + res.status + ']';
+        try {
+          const body = await res.json();
+          const msgs = (body.errors || []).map((er) => er.message).filter(Boolean);
+          if (msgs.length) errMsg = msgs.join(', ');
+        } catch (parseErr) {
+          console.error('[MECHDASH] Response parse error:', parseErr);
+        }
+        statusEl.textContent = '> ERROR: ' + errMsg.toUpperCase();
+        statusEl.className = 'form-status err';
+      }
+    } catch {
+      statusEl.textContent = '> TRANSMISSION FAILED — CHECK NETWORK LINK';
+      statusEl.className = 'form-status err';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('sending');
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
