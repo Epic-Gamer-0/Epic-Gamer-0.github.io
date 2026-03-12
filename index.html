@@ -824,6 +824,22 @@
       </ul>
     </div>
   </section>
+<section class="panel" style="margin-top: 2rem; border: 1px solid var(--cyan); background: var(--bg2);">
+    <div class="panel-header" style="background: var(--bg3); padding: 0.6rem 1.25rem; border-bottom: 1px solid var(--cyan-dim); display: flex; justify-content: space-between;">
+      <span class="panel-title" style="font-family: var(--font-head); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.22em;">⟁ LIVE DATA STREAM // CHAT</span>
+      <span class="panel-badge" style="font-size: 0.6rem; color: var(--green); border: 1px solid var(--green); padding: 0 5px;">ONLINE</span>
+    </div>
+    
+    <div id="chat-display" style="height: 300px; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.8rem; background: rgba(0,0,0,0.2); font-family: var(--font-mono);">
+      <div style="color: var(--cyan-dim); font-size: 0.7rem;">[SYSTEM] Connecting...</div>
+    </div>
+
+    <div style="padding: 1rem; border-top: 1px solid var(--cyan-dim); display: flex; gap: 0.5rem; background: var(--bg3);">
+      <input type="text" id="chat-name" placeholder="[NICK]" maxlength="15" style="width: 80px; background: transparent; border: 1px solid var(--cyan-dim); color: var(--cyan); padding: 5px; font-family: var(--font-mono); font-size: 0.8rem;">
+      <input type="text" id="chat-input" placeholder="> Write Message..." style="flex: 1; background: transparent; border: 1px solid var(--cyan-dim); color: var(--text); padding: 5px; font-family: var(--font-mono); font-size: 0.8rem;">
+      <button id="chat-send" style="background: var(--cyan); color: #000; border: none; padding: 5px 15px; cursor: pointer; font-family: var(--font-head); font-weight: bold; font-size: 0.7rem;">SEND</button>
+    </div>
+  </section>
 </main>
 
 <!-- ░░ FOOTER ░░ -->
@@ -1313,6 +1329,55 @@
   });
 
 })();
+// --- FIREBASE CHAT MODÜLÜ (SİBER-NODE ÖZEL) ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC9S7yvgaWXFGzeKy2mbVyH7qc4TQ50Iho",
+  authDomain: "cybernode-fa2bf.firebaseapp.com",
+  databaseURL: "https://cybernode-fa2bf-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "cybernode-fa2bf",
+  storageBucket: "cybernode-fa2bf.firebasestorage.app",
+  messagingSenderId: "32925898019",
+  appId: "1:32925898019:web:b554b178e439f5eebd2896"
+};
+
+const chatApp = initializeApp(firebaseConfig);
+const chatDb = getDatabase(chatApp);
+const messagesRef = ref(chatDb, 'messages');
+
+const display = document.getElementById('chat-display');
+const nInput = document.getElementById('chat-name');
+const mInput = document.getElementById('chat-input');
+const sBtn = document.getElementById('chat-send');
+
+// Mesaj Gönderme Fonksiyonu
+const sendMessage = () => {
+  const name = nInput.value.trim() || "ANONYMOUS";
+  const msg = mInput.value.trim();
+  if (msg) {
+    push(messagesRef, {
+      user: name,
+      text: msg,
+      time: serverTimestamp()
+    });
+    mInput.value = "";
+  }
+};
+
+sBtn.onclick = sendMessage;
+mInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+
+// Mesajları Anlık Dinleme
+onChildAdded(messagesRef, (snapshot) => {
+  const data = snapshot.val();
+  const msgDiv = document.createElement('div');
+  msgDiv.style.marginBottom = "5px";
+  msgDiv.innerHTML = `<span style="color: var(--cyan-dim); font-weight:bold;">[${data.user}]</span> <span style="color: var(--text);">${data.text}</span>`;
+  display.appendChild(msgDiv);
+  display.scrollTop = display.scrollHeight; // Otomatik aşağı kaydır
+});
 </script>
 </body>
 </html>
