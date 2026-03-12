@@ -1329,55 +1329,58 @@
   });
 
 })();
-// --- FIREBASE CHAT MODÜLÜ (SİBER-NODE ÖZEL) ---
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC9S7yvgaWXFGzeKy2mbVyH7qc4TQ50Iho",
-  authDomain: "cybernode-fa2bf.firebaseapp.com",
-  databaseURL: "https://cybernode-fa2bf-default-rtdb.europe-west1.firebasedatabase.app/",
-  projectId: "cybernode-fa2bf",
-  storageBucket: "cybernode-fa2bf.firebasestorage.app",
-  messagingSenderId: "32925898019",
-  appId: "1:32925898019:web:b554b178e439f5eebd2896"
-};
+</script>
+  <script type="module">
+  // --- FIREBASE CHAT MODÜLÜ (SİBER-NODE ÖZEL) ---
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-const chatApp = initializeApp(firebaseConfig);
-const chatDb = getDatabase(chatApp);
-const messagesRef = ref(chatDb, 'messages');
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9S7yvgaWXFGzeKy2mbVyH7qc4TQ50Iho",
+    authDomain: "cybernode-fa2bf.firebaseapp.com",
+    databaseURL: "https://cybernode-fa2bf-default-rtdb.europe-west1.firebasedatabase.app/",
+    projectId: "cybernode-fa2bf",
+    storageBucket: "cybernode-fa2bf.firebasestorage.app",
+    messagingSenderId: "32925898019",
+    appId: "1:32925898019:web:b554b178e439f5eebd2896"
+  };
 
-const display = document.getElementById('chat-display');
-const nInput = document.getElementById('chat-name');
-const mInput = document.getElementById('chat-input');
-const sBtn = document.getElementById('chat-send');
+  const chatApp = initializeApp(firebaseConfig);
+  const chatDb = getDatabase(chatApp);
+  const messagesRef = ref(chatDb, 'messages');
 
-// Mesaj Gönderme Fonksiyonu
-const sendMessage = () => {
-  const name = nInput.value.trim() || "ANONYMOUS";
-  const msg = mInput.value.trim();
-  if (msg) {
-    push(messagesRef, {
-      user: name,
-      text: msg,
-      time: serverTimestamp()
-    });
-    mInput.value = "";
-  }
-};
+  const display = document.getElementById('chat-display');
+  const nInput = document.getElementById('chat-name');
+  const mInput = document.getElementById('chat-input');
+  const sBtn = document.getElementById('chat-send');
 
-sBtn.onclick = sendMessage;
-mInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+  // Mesaj Gönderme
+  const sendMessage = () => {
+    const name = nInput.value.trim() || "ANONYMOUS";
+    const msg = mInput.value.trim();
+    if (msg) {
+      push(messagesRef, {
+        user: name,
+        text: msg,
+        time: serverTimestamp()
+      });
+      mInput.value = "";
+    }
+  };
 
-// Mesajları Anlık Dinleme
-onChildAdded(messagesRef, (snapshot) => {
-  const data = snapshot.val();
-  const msgDiv = document.createElement('div');
-  msgDiv.style.marginBottom = "5px";
-  msgDiv.innerHTML = `<span style="color: var(--cyan-dim); font-weight:bold;">[${data.user}]</span> <span style="color: var(--text);">${data.text}</span>`;
-  display.appendChild(msgDiv);
-  display.scrollTop = display.scrollHeight; // Otomatik aşağı kaydır
-});
+  sBtn.onclick = sendMessage;
+  mInput.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+
+  // Mesajları Dinleme
+  onChildAdded(messagesRef, (snapshot) => {
+    const data = snapshot.val();
+    const msgDiv = document.createElement('div');
+    msgDiv.style.marginBottom = "5px";
+    msgDiv.innerHTML = `<span style="color: var(--cyan-dim); font-weight:bold;">[${data.user}]</span> <span style="color: var(--text);">${data.text}</span>`;
+    display.appendChild(msgDiv);
+    display.scrollTop = display.scrollHeight;
+  });
 </script>
 </body>
 </html>
