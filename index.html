@@ -1331,11 +1331,29 @@
 })();
 
 </script>
+  <div id="pano-galeri" style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;"></div>
+
+<hr style="margin-top: 50px;">
+
+<div id="admin-login-alani" style="padding: 20px; background-color: #f4f4f4; border-radius: 8px;">
+    <h3>Super secret control panel</h3>
+    <input type="email" id="adminEmail" placeholder="E-posta">
+    <input type="password" id="adminSifre" placeholder="Şifre">
+    <button id="btnGirisYap">login</button>
+</div>
+
+<div id="admin-yukleme-alani" style="display: none; padding: 20px; background-color: #e8f5e9; border-radius: 8px;">
+    <h3>Hang a trophy</h3>
+    <input type="file" id="resimSecici" accept="image/*">
+    <button id="btnResimYukle">Download!</button>
+    <p id="yuklemeDurumu" style="font-weight: bold; color: green;"></p>
+</div>
   <script type="module">
   // --- FIREBASE CHAT MODÜLÜ (SİBER-NODE ÖZEL) ---
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
-
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+  import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-storage.js";
   const firebaseConfig = {
     apiKey: "AIzaSyC9S7yvgaWXFGzeKy2mbVyH7qc4TQ50Iho",
     authDomain: "cybernode-fa2bf.firebaseapp.com",
@@ -1349,7 +1367,8 @@
   const chatApp = initializeApp(firebaseConfig);
   const chatDb = getDatabase(chatApp);
   const messagesRef = ref(chatDb, 'messages');
-
+  const auth = getAuth(chatApp);
+  const storage = getStorage(chatApp);
   const display = document.getElementById('chat-display');
   const nInput = document.getElementById('chat-name');
   const mInput = document.getElementById('chat-input');
@@ -1381,7 +1400,68 @@
     display.appendChild(msgDiv);
     display.scrollTop = display.scrollHeight;
   });
-</script>
+// --- 1. ADMİN GİRİŞ FONKSİYONU ---
+document.getElementById("btnGirisYap").addEventListener("click", () => {
+    const email = document.getElementById("adminEmail").value;
+    const sifre = document.getElementById("adminSifre").value;
+
+    signInWithEmailAndPassword(auth, email, sifre)
+    .then((userCredential) => {
+        alert("Hello Boss.");
+        document.getElementById("admin-login-alani").style.display = "none";
+        document.getElementById("admin-yukleme-alani").style.display = "block";
+    })
+    .catch((error) => {
+        alert("Giriş Başarısız: " + error.message);
+    });
+});
+
+// --- 2. RESİM YÜKLEME FONKSİYONU ---
+document.getElementById("btnResimYukle").addEventListener("click", () => {
+    const dosyaInput = document.getElementById("resimSecici");
+    const dosya = dosyaInput.files[0];
+    
+    if (!dosya) {
+        alert("pick a trophy!");
+        return;
+    }
+
+    const durumMetni = document.getElementById("yuklemeDurumu");
+    durumMetni.innerText = "Uploading...";
+
+    // Storage'da 'pano' diye bir klasör açıp resmi oraya atıyoruz
+    const resimYolu = storageRef(storage, 'pano/' + dosya.name);
+
+    uploadBytes(resimYolu, dosya).then((snapshot) => {
+        return getDownloadURL(snapshot.ref);
+    }).then((downloadURL) => {
+        // Linki alıp Database'e yazıyoruz
+        push(ref(chatDb, 'pano'), {
+            url: downloadURL
+        });
+        
+        durumMetni.innerText = "Hanged!";
+        dosyaInput.value = ""; // Seçiciyi sıfırla
+    }).catch((error) => {
+        durumMetni.innerText = "ERROR: " + error.message;
+    });
+});
+
+// --- 3. PANODAKİ RESİMLERİ GÖSTERME (Canlı Dinleme) ---
+onChildAdded(ref(chatDb, 'pano'), (data) => {
+    const galeri = document.getElementById("pano-galeri");
+    const veri = data.val();
+    
+    const img = document.createElement("img");
+    img.src = veri.url;
+    img.style.width = "250px"; 
+    img.style.borderRadius = "10px";
+    img.style.boxShadow = "0px 4px 8px rgba(0,0,0,0.2)";
+    img.style.objectFit = "cover";
+
+    galeri.appendChild(img);
+});
+  </script>
 </body>
 </html>
 
