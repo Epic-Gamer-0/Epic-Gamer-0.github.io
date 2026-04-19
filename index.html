@@ -1,9 +1,62 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>skull emoji</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Template</title>
+    <!-- Load Tailwind CSS via CDN (No installation required) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="background-color: #fafafa;">
-    </body>
+<!-- Add your background image URL inside the url('') below -->
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center font-sans bg-gray-200" 
+      style="background-image: url('');">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 w-full max-w-6xl">
+        
+        <!-- Grid Layout: 1 column on mobile, 3 columns on desktop -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+
+            <!-- LEFT COLUMN: Albums / Interests Area -->
+            <!-- You can replace the text below with images (e.g., a 3x3 grid of album covers) -->
+            <div class="flex flex-col items-center justify-center min-h-[300px] text-white text-2xl font-semibold drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] text-center">
+                
+                [ Albums or Interests ]
+                
+            </div>
+
+            <!-- MIDDLE COLUMN: Profile Section -->
+            <div class="flex flex-col items-center justify-center text-black">
+                
+                <!-- Profile Picture Wrapper -->
+                <div class="w-48 h-48 rounded-full border-[4px] border-black bg-white flex items-center justify-center mb-4 overflow-hidden shadow-2xl relative">
+                    
+                    <!-- To add your image, remove the comment tags below and add your image path to src="" -->
+                    <!-- <img src="YOUR_IMAGE_PATH_HERE.jpg" alt="Profile" class="w-full h-full object-cover absolute inset-0"> -->
+                    
+                    <!-- Temporary placeholder (Will be covered when image is active) -->
+                    <span class="text-2xl font-bold text-gray-300">[ pfp ]</span>
+                </div>
+
+                <!-- Profile Info / Details -->
+                <div class="text-center drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
+                    <h1 class="text-4xl font-extrabold mb-1">[ Name ]</h1>
+                    <h2 class="text-2xl font-bold mb-1">[ Nickname ]</h2>
+                    <p class="text-xl font-semibold">[ Pronouns ]</p>
+                    <p class="text-xl font-semibold">[ Date ]</p>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Intro / About Me Box -->
+            <!-- Solid borders and background just like the sketch -->
+            <div class="border-[4px] border-black bg-white p-8 text-center text-xl font-bold text-black shadow-2xl min-h-[250px] flex flex-col items-center justify-center transform transition hover:scale-105 duration-300">
+                
+                [ Intro Box / Bio Area ]
+                
+            </div>
+
+        </div>
+    </div>
+
+</body>
 </html>
