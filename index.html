@@ -77,17 +77,16 @@
 
         // BURAYA KENDİ FIREBASE AYARLARINI YAPIŞTIR
         const firebaseConfig = {
-            apiKey: "SENIN_API_KEY",
-            authDomain: "SENIN_PROJEN.firebaseapp.com",
-            projectId: "SENIN_PROJE_ID",
-            storageBucket: "SENIN_PROJEN.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID"
-        };
-
+  apiKey: "AIzaSyC60xJLAo_FD7MOYgxq98GJTrF0VCugQ3I",
+  authDomain: "leos-blud.firebaseapp.com",
+  projectId: "leos-blud",
+  storageBucket: "leos-blud.firebasestorage.app",
+  messagingSenderId: "306846163333",
+  appId: "1:306846163333:web:94d01ca0c8ecd9e2e0e4ec"
+};
         // Firebase'i başlat (Bilgilerini girince bu kısımlar çalışacak)
-        // const app = initializeApp(firebaseConfig);
-        // const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         // 2. ÇİZİM (CANVAS) AYARLARI
         const canvas = document.getElementById('drawCanvas');
@@ -153,11 +152,11 @@
             if (!textInput.trim()) return alert("you cant send an empty box!");
 
             try {
-                // await addDoc(collection(db, "guestbook"), {
-                //     type: "text",
-                //     content: textInput,
-                //     timestamp: serverTimestamp()
-                // });
+                await addDoc(collection(db, "guestbook"), {
+                     type: "text",
+                    content: textInput,
+                     timestamp: serverTimestamp()
+                 });
                 alert("sent!");
                 document.getElementById('anonText').value = ''; // Kutuyu temizle
             } catch (e) {
@@ -172,11 +171,11 @@
             const imageData = canvas.toDataURL("image/png");
 
             try {
-                // await addDoc(collection(db, "guestbook"), {
-                //     type: "drawing",
-                //     content: imageData,
-                //     timestamp: serverTimestamp()
-                // });
+                 await addDoc(collection(db, "guestbook"), {
+                     type: "drawing",
+                     content: imageData,
+                     timestamp: serverTimestamp()
+                 });
                 alert("Sent!");
                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Çizimi temizle
             } catch (e) {
