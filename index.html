@@ -3,60 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leobluds Harem</title>
-    <!-- Load Tailwind CSS via CDN (No installation required) -->
+    <title>LeoBlud | Profile</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<!-- Add your background image URL inside the url('') below -->
-<body class="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center font-sans bg-gray-200" 
-      style="background-image: url('');">
+<body class="min-h-screen bg-cover bg-center flex items-center justify-center font-sans bg-gray-200 backdrop-blur-sm py-10" 
+      style="background-image: url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2000&auto=format&fit=crop');">
 
-    <!-- Main Container -->
-    <div class="container mx-auto px-4 w-full max-w-6xl">
+    <div class="container mx-auto px-4 w-full max-w-7xl">
         
-        <!-- Grid Layout: 1 column on mobile, 3 columns on desktop -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+        <!-- Sütunların yükseklik hizalamasını ortalamaktan 'items-start' (üstten başla) olarak değiştirdik çünkü sağ taraf artık daha uzun -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
 
-            <!-- LEFT COLUMN: Albums / Interests Area -->
-            <!-- You can replace the text below with images (e.g., a 3x3 grid of album covers) -->
-            <div class="flex flex-col items-center justify-center min-h-[300px] text-white text-2xl font-semibold drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] text-center">
-                
-                [Albums]
-                
+            <!-- SOL SÜTUN: Spotify -->
+            <div class="flex flex-col items-center justify-center drop-shadow-2xl hover:scale-105 transition duration-300 md:mt-12">
+                <iframe 
+                    style="border-radius:12px" 
+                    src="https://open.spotify.com/embed/album/1A2GTWGtFfWp7KSQTwOyoM?utm_source=generator&theme=0" 
+                    width="100%" 
+                    height="352" 
+                    frameBorder="0" 
+                    allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                </iframe>
             </div>
 
-            <!-- MIDDLE COLUMN: Profile Section -->
-            <div class="flex flex-col items-center justify-center text-black">
-                
-                <!-- Profile Picture Wrapper -->
-                <div class="w-48 h-48 rounded-full border-[4px] border-black bg-white flex items-center justify-center mb-4 overflow-hidden shadow-2xl relative">
-                    
-                    <!-- To add your image, remove the comment tags below and add your image path to src="" -->
-                    <!-- <img src="YOUR_IMAGE_PATH_HERE.jpg" alt="Profile" class="w-full h-full object-cover absolute inset-0"> -->
-                    
-                    <!-- Temporary placeholder (Will be covered when image is active) -->
-                    <span class="text-2xl font-bold text-gray-300">[ pfp ]</span>
+            <!-- ORTA SÜTUN: Profil -->
+            <div class="flex flex-col items-center justify-center text-black md:mt-12">
+                <div class="w-56 h-56 rounded-full border-[4px] border-black bg-white flex items-center justify-center mb-4 overflow-hidden shadow-2xl relative">
+                    <img src="https://i.pinimg.com/736x/8f/c3/7b/8fc37b7caeaeb2f5924dd180470ee928.jpg" alt="Profile" class="w-full h-full object-cover absolute inset-0">
                 </div>
-
-                <!-- Profile Info / Details -->
-                <div class="text-center drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
-                    <h1 class="text-4xl font-extrabold mb-1">LeoBlud</h1>
+                <div class="text-center drop-shadow-[0_2px_2px_rgba(255,255,255,0.9)]">
+                    <h1 class="text-5xl font-extrabold mb-1 tracking-tight">LeoBlud</h1>
                     <h2 class="text-2xl font-bold mb-1">Leo</h2>
                     <p class="text-xl font-semibold">He/Him</p>
                     <p class="text-xl font-semibold">01/09</p>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: Intro / About Me Box -->
-            <!-- Solid borders and background just like the sketch -->
-            <div class="border-[4px] border-black bg-white p-8 text-center text-xl font-bold text-black shadow-2xl min-h-[250px] flex flex-col items-center justify-center transform transition hover:scale-105 duration-300">
+            <!-- SAĞ SÜTUN: Hakkımda & Anonim Kutu -->
+            <div class="flex flex-col gap-6 w-full max-w-sm mx-auto">
                 
-                [ NITROUS / Bio Area ]
-                
+                <!-- Biyografi Kutusu -->
+                <div class="border-[4px] border-black bg-white/95 p-6 text-left text-lg font-bold text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)]">
+                    hi im leoblud or just leo uhhh i am mexicanblud and am in highschool uhh i like lots of things like normalsville and guitar and yea various shit ask me and i will either know it or ill ask what it is bc i am indeed curious okhihellobye
+                </div>
+
+                <!-- Anonim Mesaj ve Çizim Kutusu (Strawpage Tarzı) -->
+                <div class="border-[4px] border-black bg-white/95 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)]">
+                    <h3 class="text-xl font-extrabold mb-3 border-b-4 border-black pb-1">anon guestbook 🖍️</h3>
+                    
+                    <!-- Text Alanı -->
+                    <div class="mb-5">
+                        <textarea id="anonText" rows="2" class="w-full border-[3px] border-black p-2 text-sm font-bold focus:outline-none focus:bg-yellow-50 resize-none mb-1" placeholder="say something anon..."></textarea>
+                        <button id="sendTextBtn" class="w-full bg-black text-white font-extrabold py-2 border-2 border-black hover:bg-white hover:text-black transition">SEND TEXT</button>
+                    </div>
+
+                    <!-- Çizim Alanı -->
+                    <div>
+                        <p class="text-sm font-bold mb-1">or draw something:</p>
+                        <!-- Canvas -->
+                        <canvas id="drawCanvas" width="300" height="150" class="border-[3px] border-black w-full bg-gray-100 mb-2 cursor-crosshair touch-none"></canvas>
+                        
+                        <div class="flex gap-2">
+                            <button id="clearDrawBtn" class="w-1/3 bg-white text-black font-extrabold py-1 border-2 border-black hover:bg-gray-200 transition">CLEAR</button>
+                            <button id="sendDrawBtn" class="w-2/3 bg-black text-white font-extrabold py-1 border-2 border-black hover:bg-white hover:text-black transition">SEND DRAWING</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
 
+    <!-- FIREBASE VE ÇİZİM (CANVAS) SCRİPTLERİ -->
+    <script type="module">
+        // 1. FIREBASE BAĞLANTISI (Aşağıdaki bilgileri kendi projenle değiştireceksin)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // BURAYA KENDİ FIREBASE AYARLARINI YAPIŞTIR
+        const firebaseConfig = {
+            apiKey: "SENIN_API_KEY",
+            authDomain: "SENIN_PROJEN.firebaseapp.com",
+            projectId: "SENIN_PROJE_ID",
+            storageBucket: "SENIN_PROJEN.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+
+        // Firebase'i başlat (Bilgilerini girince bu kısımlar çalışacak)
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFirestore(app);
+
+        // 2. ÇİZİM (CANVAS) AYARLARI
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // Fırça ayarları
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'black';
+
+        // Mouse Eventleri (Bilgisayar)
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseout', endPosition);
+
+        // Touch Eventleri (Mobil / Telefon)
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }, { passive: false });
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+
+        function startPosition(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function endPosition() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            // Mouse veya Dokunmatik pozisyonunu algıla
+            const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            
+            // X ve Y eksenini canvas boyutuna göre ayarla
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const x = (clientX - rect.left) * scaleX;
+            const y = (clientY - rect.top) * scaleY;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        // Temizle Butonu
+        document.getElementById('clearDrawBtn').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // 3. FIREBASE'E VERİ GÖNDERME İŞLEMLERİ
+        
+        // Yazı Gönderme
+        document.getElementById('sendTextBtn').addEventListener('click', async () => {
+            const textInput = document.getElementById('anonText').value;
+            if (!textInput.trim()) return alert("yazı kutusu boş!");
+
+            try {
+                // await addDoc(collection(db, "guestbook"), {
+                //     type: "text",
+                //     content: textInput,
+                //     timestamp: serverTimestamp()
+                // });
+                alert("Yazı gönderildi! (Firebase ayarlarını girince veritabanına eklenecek)");
+                document.getElementById('anonText').value = ''; // Kutuyu temizle
+            } catch (e) {
+                console.error("Hata:", e);
+                alert("Gönderilemedi!");
+            }
+        });
+
+        // Çizim Gönderme
+        document.getElementById('sendDrawBtn').addEventListener('click', async () => {
+            // Çizimi Base64 resim koduna çevirir (veritabanına metin olarak kaydedebilmek için)
+            const imageData = canvas.toDataURL("image/png");
+
+            try {
+                // await addDoc(collection(db, "guestbook"), {
+                //     type: "drawing",
+                //     content: imageData,
+                //     timestamp: serverTimestamp()
+                // });
+                alert("Çizim gönderildi! (Firebase ayarlarını girince veritabanına eklenecek)");
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Çizimi temizle
+            } catch (e) {
+                console.error("Hata:", e);
+                alert("Gönderilemedi!");
+            }
+        });
+    </script>
 </body>
 </html>
