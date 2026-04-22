@@ -159,7 +159,7 @@
         // Yazı Gönderme
         document.getElementById('sendTextBtn').addEventListener('click', async () => {
             const textInput = document.getElementById('anonText').value;
-            if (!textInput.trim()) return alert("yazı kutusu boş!");
+            if (!textInput.trim()) return alert("you cant send an empty box!");
 
             try {
                 // await addDoc(collection(db, "guestbook"), {
@@ -167,11 +167,11 @@
                 //     content: textInput,
                 //     timestamp: serverTimestamp()
                 // });
-                alert("Yazı gönderildi! (Firebase ayarlarını girince veritabanına eklenecek)");
+                alert("sent!");
                 document.getElementById('anonText').value = ''; // Kutuyu temizle
             } catch (e) {
-                console.error("Hata:", e);
-                alert("Gönderilemedi!");
+                console.error("ERROR:", e);
+                alert("your not supposed to see this!");
             }
         });
 
@@ -186,11 +186,11 @@
                 //     content: imageData,
                 //     timestamp: serverTimestamp()
                 // });
-                alert("Çizim gönderildi! (Firebase ayarlarını girince veritabanına eklenecek)");
+                alert("Sent!");
                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Çizimi temizle
             } catch (e) {
-                console.error("Hata:", e);
-                alert("Gönderilemedi!");
+                console.error("error cuh", e);
+                alert("your not supposed to see this");
             }
         });
     </script>
