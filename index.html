@@ -69,16 +69,37 @@
                     </div>
 
                     <!-- Çizim Alanı -->
-                    <div>
-                        <p class="text-sm font-bold mb-1">or draw something:</p>
-                        <!-- Canvas -->
-                        <canvas id="drawCanvas" width="300" height="150" class="border-[3px] border-black w-full bg-gray-100 mb-2 cursor-crosshair touch-none"></canvas>
+                    <!-- New & Improved Drawing Area -->
+                <div>
+                    <p class="text-sm font-bold mb-1 uppercase tracking-tighter">or draw something:</p>
+                    
+                    <!-- Drawing Tool Bar -->
+                    <div class="flex flex-wrap items-center gap-2 mb-2 bg-gray-100 p-2 border-[3px] border-black">
+                        <!-- Colors -->
+                        <div class="flex gap-1 border-r-2 border-black pr-2">
+                            <button type="button" onclick="changeColor('black')" class="w-5 h-5 bg-black border-2 border-white rounded-full"></button>
+                            <button type="button" onclick="changeColor('#ef4444')" class="w-5 h-5 bg-red-500 border-2 border-white rounded-full"></button>
+                            <button type="button" onclick="changeColor('#3b82f6')" class="w-5 h-5 bg-blue-500 border-2 border-white rounded-full"></button>
+                            <button type="button" onclick="changeColor('#22c55e')" class="w-5 h-5 bg-green-500 border-2 border-white rounded-full"></button>
+                        </div>
+
+                        <!-- Eraser & Size -->
+                        <button type="button" id="eraserBtn" onclick="toggleEraser()" class="text-[10px] font-black px-2 py-0.5 border-2 border-black bg-white hover:bg-gray-200 uppercase">Eraser</button>
                         
-                        <div class="flex gap-2">
-                            <button id="clearDrawBtn" class="w-1/3 bg-white text-black font-extrabold py-1 border-2 border-black hover:bg-gray-200 transition">CLEAR</button>
-                            <button id="sendDrawBtn" class="w-2/3 bg-black text-white font-extrabold py-1 border-2 border-black hover:bg-white hover:text-black transition">SEND DRAWING</button>
+                        <div class="flex items-center gap-1 ml-auto">
+                            <span class="text-[9px] font-bold italic">SIZE:</span>
+                            <input type="range" id="sizePicker" min="1" max="30" value="4" class="w-12 h-2 accent-black cursor-pointer">
                         </div>
                     </div>
+
+                    <!-- Canvas -->
+                    <canvas id="drawCanvas" width="400" height="250" class="border-[3px] border-black w-full bg-white mb-2 cursor-crosshair touch-none"></canvas>
+                    
+                    <div class="flex gap-2">
+                        <button type="button" id="clearDrawBtn" class="w-1/3 bg-white text-black font-extrabold py-1 border-2 border-black hover:bg-gray-200 transition uppercase text-xs">Clear</button>
+                        <button type="button" id="sendDrawBtn" class="w-2/3 bg-black text-white font-extrabold py-1 border-2 border-black hover:bg-white hover:text-black transition uppercase text-xs">Send Drawing</button>
+                    </div>
+                </div>
                 </div>
 
             </div>
@@ -106,49 +127,56 @@
         const db = getFirestore(app);
 
         // 2. ÇİZİM (CANVAS) AYARLARI
+      // 2. UPDATED DRAWING SETTINGS (COLORS, ERASER, SIZE)
         const canvas = document.getElementById('drawCanvas');
         const ctx = canvas.getContext('2d');
+        const sizePicker = document.getElementById('sizePicker');
+        const eraserBtn = document.getElementById('eraserBtn');
+
         let isDrawing = false;
+        let currentColor = 'black';
+        let isEraser = false;
 
-        // Fırça ayarları
-        ctx.lineWidth = 4;
+        // Settings for smoother drawing
         ctx.lineCap = 'round';
-        ctx.strokeStyle = 'black';
+        ctx.lineJoin = 'round';
 
-        // Mouse Eventleri (Bilgisayar)
-        canvas.addEventListener('mousedown', startPosition);
-        canvas.addEventListener('mouseup', endPosition);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseout', endPosition);
+        // Add functions to window so they work with HTML onclick
+        window.changeColor = (color) => {
+            isEraser = false;
+            currentColor = color;
+            eraserBtn.classList.remove('bg-black', 'text-white');
+            eraserBtn.classList.add('bg-white', 'text-black');
+        };
 
-        // Touch Eventleri (Mobil / Telefon)
-        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }, { passive: false });
-        canvas.addEventListener('touchend', endPosition);
-        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+        window.toggleEraser = () => {
+            isEraser = !isEraser;
+            if(isEraser) {
+                eraserBtn.classList.add('bg-black', 'text-white');
+                eraserBtn.classList.remove('bg-white', 'text-black');
+            } else {
+                eraserBtn.classList.remove('bg-black', 'text-white');
+                eraserBtn.classList.add('bg-white', 'text-black');
+            }
+        };
 
-        function startPosition(e) {
-            isDrawing = true;
-            draw(e);
-        }
-
-        function endPosition() {
-            isDrawing = false;
-            ctx.beginPath();
-        }
+        function startPosition(e) { isDrawing = true; draw(e); }
+        function endPosition() { isDrawing = false; ctx.beginPath(); }
 
         function draw(e) {
             if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
-            // Mouse veya Dokunmatik pozisyonunu algıla
             const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
             
-            // X ve Y eksenini canvas boyutuna göre ayarla
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-
             const x = (clientX - rect.left) * scaleX;
             const y = (clientY - rect.top) * scaleY;
+
+            ctx.lineWidth = sizePicker.value;
+            // Eraser logic: if active, paint white (background color)
+            ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -156,7 +184,15 @@
             ctx.moveTo(x, y);
         }
 
-        // Temizle Butonu
+        // Event Listeners for PC and Mobile
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }, { passive: false });
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+        
+        // Clear Button logic
         document.getElementById('clearDrawBtn').addEventListener('click', () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
