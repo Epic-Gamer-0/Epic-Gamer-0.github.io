@@ -4,174 +4,433 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeoBlud | Profile</title>
-    <!--  CSS -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for beautiful modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+        }
+        /* Custom Scrollbar for Bento Guestbook */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-cover bg-center flex items-center justify-center font-sans bg-gray-200 backdrop-blur-sm py-10" 
-      style="background-image: url('https://i.imgur.com/x0J94r1.jpeg');">
+<body class="min-h-screen bg-cover bg-center flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden" 
+      style="background-image: url('https://i.imgur.com/x0J94r1.jpeg'); background-attachment: fixed;">
 
-    <div class="container mx-auto px-4 w-full max-w-7xl">
+    <!-- Background Overlay for modern dark glassmorphic look -->
+    <div class="absolute inset-0 bg-slate-950/65 backdrop-blur-[8px] z-0"></div>
+
+    <div class="container mx-auto max-w-6xl z-10 relative">
         
-        <!--  -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+        <!-- Header / Logo section (Sleek minimalist tag) -->
+        <div class="flex justify-between items-center mb-6 px-2">
+            <div class="flex items-center gap-2">
+                <span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Leo's Digital Space</span>
+            </div>
+            <div class="text-[10px] text-slate-400 bg-slate-900/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-sm">
+                v2.0 • Reconstructed
+            </div>
+        </div>
 
-            <!--  Spotify -->
-            <div class="flex flex-col items-center justify-center drop-shadow-2xl hover:scale-105 transition duration-300 md:mt-12">
-<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/54SoZ23EStgVXkux2DJ9Yz?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-           <!-- LOGS / UPDATES BOX -->
-<div class="mt-6 w-full border-[4px] border-black bg-white/95 p-4 text-left shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)]">
-    <h3 class="text-lg font-extrabold mb-2 border-b-2 border-black uppercase tracking-tighter">
-        Other Stuff:
-    </h3>
-    <div class="font-bold text-xs space-y-2 max-h-32 overflow-y-auto">
-        <p class="border-l-2 border-black pl-2">
-            <span class="opacity-50"></span> Discord: leovermillion
-        </p>
-        <p class="border-l-2 border-black pl-2">
-            <span class="opacity-50"></span> Tiktok: @abbeyapologist
-        </p>
-        <p class="border-l-2 border-black pl-2">
-            <span class="opacity-50"></span> 
-        </p>
-  <p class="border-l-2 border-black pl-2">
-    <span class="opacity-50"></span> 
-</p>
-        
-    </div>
-</div>
-     </div>   
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+            
+            <!-- COLUMN 1: Profile & About (Span 4) -->
+            <div class="md:col-span-4 flex flex-col gap-5">
+                
+                <!-- Card 1: Main Profile Info -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-6 shadow-glass shadow-glass-inset backdrop-blur-xl flex flex-col items-center text-center group hover:border-violet-500/30 transition-all duration-300">
+                    <!-- Avatar with pulsing accent glow -->
+                    <div class="relative w-36 h-36 rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 shadow-lg mb-4 hover:scale-105 transition duration-300">
+                        <div class="w-full h-full rounded-full overflow-hidden bg-slate-950 border border-slate-950">
+                            <img src="https://i.imgur.com/IFkedEG.png" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1">LeoBlud</h1>
+                    <h2 class="text-sm font-semibold text-violet-400 mb-3">@leovermillion</h2>
+                    
+                    <!-- Bio Quick Details Chips -->
+                    <div class="flex flex-wrap gap-2 justify-center mb-4">
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
+                            <i class="fa-solid fa-venus-mars text-[10px] text-pink-400"></i> He/Him
+                        </span>
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
+                            <i class="fa-solid fa-cake-candles text-[10px] text-amber-400"></i> Jan 9th
+                        </span>
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
+                            <i class="fa-solid fa-earth-americas text-[10px] text-teal-400"></i> Mexican
+                        </span>
+                    </div>
 
-            <!--  Profile -->
-            <div class="flex flex-col items-center justify-center text-black md:mt-12">
-                <div class="w-56 h-56 rounded-full border-[4px] border-black bg-white flex items-center justify-center mb-4 overflow-hidden shadow-2xl relative">
-                    <img src="https://i.imgur.com/IFkedEG.png" alt="Profile" class="w-full h-full object-cover absolute inset-0">
+                    <!-- Modern Quick Bio Status -->
+                    <div class="w-full pt-3 border-t border-white/5 flex items-center justify-around text-xs text-slate-400">
+                        <div>
+                            <span class="block text-white font-bold">16yo</span>
+                            <span>Age</span>
+                        </div>
+                        <div class="border-r border-white/5 h-6"></div>
+                        <div>
+                            <span class="block text-white font-bold">Guitar</span>
+                            <span>Hobby</span>
+                        </div>
+                        <div class="border-r border-white/5 h-6"></div>
+                        <div>
+                            <span class="block text-emerald-400 font-bold">Active</span>
+                            <span>Status</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-center drop-shadow-[0_2px_2px_rgba(255,255,255,0.9)]">
-                    <h1 class="text-5xl font-extrabold mb-1 tracking-tight">LeoBlud</h1>
-                    <h2 class="text-2xl font-bold mb-1">Leo</h2>
-                    <p class="text-xl font-semibold">He/Him</p>
-                    <p class="text-xl font-semibold">01/09</p>
-                <!-- box -->
-<div>
-    <span ></span>
-    <span ></span>
-    <span ></span>
-</div>
+
+                <!-- Card 2: About Me (Chat Bubble Styling) -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="bg-violet-500/20 p-1.5 rounded-lg">
+                            <i class="fa-solid fa-quote-left text-violet-400 text-xs"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">About Leo</h3>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed font-medium">
+                        hi, i'm leoblud (or just leo)! i'm a Mexican high schooler. i love a ton of things including normalsville, playing the guitar, and pretty much various random stuff. ask me anything—i'll either know it or i'll ask what it is because i'm super curious. welcome to my space!
+                    </p>
                 </div>
+
+                <!-- Card 3: Social Links -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Connect with me</h3>
+                    
+                    <div class="flex flex-col gap-3">
+                        <!-- Discord -->
+                        <div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-xl group/soc hover:bg-violet-500/10 hover:border-violet-500/20 transition-all duration-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
+                                    <i class="fa-brands fa-discord text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-400 font-semibold">Discord</span>
+                                    <span class="text-sm font-bold text-white">leovermillion</span>
+                                </div>
+                            </div>
+                            <button onclick="navigator.clipboard.writeText('leovermillion'); alert('Copied Discord ID!');" 
+                                    class="text-xs text-slate-400 bg-white/5 hover:bg-white/10 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/5 transition">
+                                Copy
+                            </button>
+                        </div>
+
+                        <!-- TikTok -->
+                        <a href="https://www.tiktok.com/@abbeyapologist" target="_blank" 
+                           class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-xl group/soc hover:bg-pink-500/10 hover:border-pink-500/20 transition-all duration-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-pink-600/20 text-pink-400 flex items-center justify-center">
+                                    <i class="fa-brands fa-tiktok text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-400 font-semibold">TikTok</span>
+                                    <span class="text-sm font-bold text-white">@abbeyapologist</span>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400 bg-white/5 group-hover/soc:bg-white/10 group-hover/soc:text-white px-2.5 py-1.5 rounded-lg border border-white/5 transition flex items-center gap-1">
+                                Visit <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- about -->
-            <div class="flex flex-col gap-6 w-full max-w-sm mx-auto">
+            <!-- COLUMN 2: Spotify & Live Guestbook Feed (Span 4) -->
+            <div class="md:col-span-4 flex flex-col gap-5">
                 
-                <!-- aboutv2 -->
-                <div class="border-[4px] border-black bg-white/95 p-6 text-left text-lg font-bold text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)]">
-                    hi im leoblud or just leo uhhh i am mexicanblud and am in highschool uhh i like lots of things like normalsville and guitar and yea various shit ask me and i will either know it or ill ask what it is bc i am indeed curious okhihellobye
+                <!-- Card 4: Spotify Integration -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-4 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-3 px-1">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-brands fa-spotify text-emerald-400 text-lg"></i>
+                            <h3 class="text-xs font-bold text-white uppercase tracking-widest">On Repeat</h3>
+                        </div>
+                        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    </div>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/54SoZ23EStgVXkux2DJ9Yz?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
 
-                <!-- Strawpage -->
-                <div class="border-[4px] border-black bg-white/95 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)]">
-                    <h3 class="text-xl font-extrabold mb-3 border-b-4 border-black pb-1">Hi</h3>
-                    
-                    <!-- Text  -->
+                <!-- Card 5: Real-time Guestbook Feed (MASSIVE upgrade) -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl flex flex-col h-[400px] hover:border-violet-500/30 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
+                        <div class="flex items-center gap-2">
+                            <div class="bg-purple-500/20 p-1.5 rounded-lg">
+                                <i class="fa-solid fa-comments text-purple-400 text-xs"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Visitor Board</h3>
+                        </div>
+                        <span id="feed-counter" class="text-xs font-bold bg-white/5 border border-white/5 text-slate-400 px-2 py-0.5 rounded-full">Loading...</span>
+                    </div>
+
+                    <!-- Scrollable Guestbook Entries -->
+                    <div id="guestbook-feed" class="flex-1 overflow-y-auto space-y-3 pr-1 custom-scrollbar">
+                        <!-- Loading Indicator -->
+                        <div id="feed-loader" class="h-full flex flex-col items-center justify-center text-slate-400 gap-2">
+                            <i class="fa-solid fa-circle-notch animate-spin text-xl text-violet-400"></i>
+                            <p class="text-xs font-semibold">Tuning into database...</p>
+                        </div>
+                        <!-- Entries will be dynamically inserted here -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMN 3: Guestbook Inputs (Span 4) -->
+            <div class="md:col-span-4 flex flex-col gap-5">
+                
+                <!-- Card 6: Write/Draw Guestbook Form -->
+                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="bg-pink-500/20 p-1.5 rounded-lg">
+                            <i class="fa-solid fa-signature text-pink-400 text-xs"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Leave a Trace</h3>
+                    </div>
+
+                    <!-- Text comment area -->
                     <div class="mb-5">
-                        <textarea id="anonText" rows="2" class="w-full border-[3px] border-black p-2 text-sm font-bold focus:outline-none focus:bg-yellow-50 resize-none mb-1" placeholder="say something..."></textarea>
-                        <button id="sendTextBtn" class="w-full bg-black text-white font-extrabold py-2 border-2 border-black hover:bg-white hover:text-black transition">SEND TEXT</button>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Leave a comment</label>
+                        <div class="relative">
+                            <textarea id="anonText" rows="2" 
+                                      class="w-full bg-slate-950/60 border border-white/10 rounded-xl p-3 text-sm text-white font-medium placeholder-slate-500 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 resize-none transition-all duration-200" 
+                                      placeholder="Write something cool..."></textarea>
+                        </div>
+                        <button id="sendTextBtn" class="mt-2 w-full bg-violet-600 hover:bg-violet-500 text-white text-xs font-extrabold py-2.5 rounded-xl border border-violet-500/20 transition-all duration-200 shadow-lg shadow-violet-600/15 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-paper-plane text-[10px]"></i> SEND COMMENT
+                        </button>
                     </div>
 
-                    <!--  -->
-                    <!-- write -->
-                <div>
-                    <p class="text-sm font-bold mb-1 uppercase tracking-tighter">or draw something:</p>
-                    
-                    <!-- Drawing Tool Bar -->
-                    <div class="flex flex-wrap items-center gap-2 mb-2 bg-gray-100 p-2 border-[3px] border-black">
-                        <!-- Colors -->
-                        <div class="flex gap-1 border-r-2 border-black pr-2">
-                            <button type="button" onclick="changeColor('black')" class="w-5 h-5 bg-black border-2 border-white rounded-full"></button>
-                            <button type="button" onclick="changeColor('#ef4444')" class="w-5 h-5 bg-red-500 border-2 border-white rounded-full"></button>
-                            <button type="button" onclick="changeColor('#3b82f6')" class="w-5 h-5 bg-blue-500 border-2 border-white rounded-full"></button>
-                            <button type="button" onclick="changeColor('#22c55e')" class="w-5 h-5 bg-green-500 border-2 border-white rounded-full"></button>
-                        </div>
-
-                        <!-- Eraser & Size -->
-                        <button type="button" id="eraserBtn" onclick="toggleEraser()" class="text-[10px] font-black px-2 py-0.5 border-2 border-black bg-white hover:bg-gray-200 uppercase">Eraser</button>
+                    <!-- Drawing canvas container -->
+                    <div class="border-t border-white/5 pt-4">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Or draw something</label>
                         
-                        <div class="flex items-center gap-1 ml-auto">
-                            <span class="text-[9px] font-bold italic">SIZE:</span>
-                            <input type="range" id="sizePicker" min="1" max="30" value="4" class="w-12 h-2 accent-black cursor-pointer">
+                        <!-- Mini drawing toolbar -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-950/60 border border-white/10 p-2.5 rounded-xl mb-3">
+                            <!-- Colors dots -->
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="changeColor('#ffffff')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #ffffff;" title="White">
+                                    <span id="color-indicator-#ffffff" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
+                                </button>
+                                <button type="button" onclick="changeColor('#a78bfa')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #a78bfa;" title="Violet">
+                                    <span id="color-indicator-#a78bfa" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
+                                </button>
+                                <button type="button" onclick="changeColor('#f43f5e')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #f43f5e;" title="Rose">
+                                    <span id="color-indicator-#f43f5e" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
+                                </button>
+                                <button type="button" onclick="changeColor('#10b981')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #10b981;" title="Emerald">
+                                    <span id="color-indicator-#10b981" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
+                                </button>
+                                <button type="button" onclick="changeColor('#f59e0b')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #f59e0b;" title="Amber">
+                                    <span id="color-indicator-#f59e0b" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
+                                </button>
+                            </div>
+
+                            <!-- Eraser & Undo -->
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" id="eraserBtn" onclick="toggleEraser()" 
+                                        class="text-[10px] font-bold px-2 py-1 border border-white/10 bg-slate-900 text-slate-300 rounded-lg hover:bg-slate-800 transition uppercase flex items-center gap-1">
+                                    <i class="fa-solid fa-eraser text-[9px]"></i> Eraser
+                                </button>
+                                <button type="button" id="undoBtn" onclick="undo()" 
+                                        class="text-[10px] font-bold px-2 py-1 border border-white/10 bg-slate-900 text-slate-300 rounded-lg hover:bg-slate-800 transition uppercase flex items-center gap-1" title="Undo Last Stroke">
+                                    <i class="fa-solid fa-rotate-left text-[9px]"></i> Undo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Drawing controls & display -->
+                        <div class="relative bg-slate-950/70 rounded-xl overflow-hidden border border-white/10">
+                            <!-- Responsive Canvas -->
+                            <canvas id="drawCanvas" width="400" height="230" class="w-full bg-slate-950 cursor-crosshair touch-none block"></canvas>
+                        </div>
+
+                        <!-- Brush Size and Custom Labels -->
+                        <div class="mt-3 mb-4 flex items-center justify-between gap-3 px-1">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                                <i class="fa-solid fa-paint-brush text-[9px]"></i> Brush Size:
+                            </span>
+                            <div class="flex-1 flex items-center gap-2">
+                                <input type="range" id="sizePicker" min="1" max="25" value="4" class="flex-1 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-violet-500">
+                                <span id="sizeValue" class="text-xs font-bold text-slate-300 w-5 text-right">4px</span>
+                            </div>
+                        </div>
+
+                        <!-- Drawing Buttons -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" id="clearDrawBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold py-2 border border-white/5 hover:border-white/10 rounded-xl transition uppercase text-[10px] flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-trash-can"></i> Clear
+                            </button>
+                            <button type="button" id="sendDrawBtn" class="col-span-2 bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-white font-extrabold py-2 rounded-xl transition uppercase text-[10px] tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-violet-600/15">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Send Drawing
+                            </button>
                         </div>
                     </div>
-
-                    <!-- Canvas -->
-                    <canvas id="drawCanvas" width="400" height="250" class="border-[3px] border-black w-full bg-white mb-2 cursor-crosshair touch-none"></canvas>
-                    
-                    <div class="flex gap-2">
-                        <button type="button" id="clearDrawBtn" class="w-1/3 bg-white text-black font-extrabold py-1 border-2 border-black hover:bg-gray-200 transition uppercase text-xs">Clear</button>
-                        <button type="button" id="sendDrawBtn" class="w-2/3 bg-black text-white font-extrabold py-1 border-2 border-black hover:bg-white hover:text-black transition uppercase text-xs">Send Drawing</button>
-                    </div>
-                </div>
                 </div>
 
             </div>
 
         </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-xs text-slate-500">
+            <p>being just me</p>
+        </div>
     </div>
 
-    <!-- FIREBASE VE ÇİZİM (CANVAS) SCRİPTLERİ -->
+    <!-- Firebase Connection & Interactive Scripts -->
     <script type="module">
-        // 1. FIREBASE BAĞLANTISI (Aşağıdaki bilgileri kendi projenle değiştireceksin)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // BURAYA KENDİ FIREBASE AYARLARINI YAPIŞTIR
+        // FIREBASE CONFIGURATION
         const firebaseConfig = {
-  apiKey: "AIzaSyC60xJLAo_FD7MOYgxq98GJTrF0VCugQ3I",
-  authDomain: "leos-blud.firebaseapp.com",
-  projectId: "leos-blud",
-  storageBucket: "leos-blud.firebasestorage.app",
-  messagingSenderId: "306846163333",
-  appId: "1:306846163333:web:94d01ca0c8ecd9e2e0e4ec"
-};
-        // Firebase'i başlat (Bilgilerini girince bu kısımlar çalışacak)
+            apiKey: "AIzaSyC60xJLAo_FD7MOYgxq98GJTrF0VCugQ3I",
+            authDomain: "leos-blud.firebaseapp.com",
+            projectId: "leos-blud",
+            storageBucket: "leos-blud.firebasestorage.app",
+            messagingSenderId: "306846163333",
+            appId: "1:306846163333:web:94d01ca0c8ecd9e2e0e4ec"
+        };
+        
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // 2. ÇİZİM (CANVAS) AYARLARI
-      // 2. UPDATED DRAWING SETTINGS (COLORS, ERASER, SIZE)
+        // --- DRAWING CANVAS LOGIC WITH UNDO HISTORY ---
         const canvas = document.getElementById('drawCanvas');
         const ctx = canvas.getContext('2d');
         const sizePicker = document.getElementById('sizePicker');
+        const sizeValue = document.getElementById('sizeValue');
         const eraserBtn = document.getElementById('eraserBtn');
 
         let isDrawing = false;
-        let currentColor = 'black';
+        let currentColor = '#ffffff';
         let isEraser = false;
+        
+        // History Stack for Undo functionality
+        let historyStack = [];
 
-        // Settings for smoother drawing
+        // Smooth Brush Rendering Config
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        // Add functions to window so they work with HTML onclick
+        // Push state to undo stack
+        function saveHistoryState() {
+            if (historyStack.length >= 25) {
+                historyStack.shift(); // Limit memory footprint
+            }
+            historyStack.push(canvas.toDataURL());
+        }
+
+        // Active Color Dot Highlighting
+        function updateColorIndicators() {
+            const colors = ['#ffffff', '#a78bfa', '#f43f5e', '#10b981', '#f59e0b'];
+            colors.forEach(col => {
+                const indicator = document.getElementById(`color-indicator-${col}`);
+                if (indicator) {
+                    if (currentColor === col && !isEraser) {
+                        indicator.classList.remove('hidden');
+                    } else {
+                        indicator.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // Expose functions globally for HTML onclick events
         window.changeColor = (color) => {
             isEraser = false;
             currentColor = color;
-            eraserBtn.classList.remove('bg-black', 'text-white');
-            eraserBtn.classList.add('bg-white', 'text-black');
+            eraserBtn.classList.remove('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
+            eraserBtn.classList.add('bg-slate-900', 'text-slate-300', 'border-white/10');
+            updateColorIndicators();
         };
 
         window.toggleEraser = () => {
             isEraser = !isEraser;
-            if(isEraser) {
-                eraserBtn.classList.add('bg-black', 'text-white');
-                eraserBtn.classList.remove('bg-white', 'text-black');
+            if (isEraser) {
+                eraserBtn.classList.add('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
+                eraserBtn.classList.remove('bg-slate-900', 'text-slate-300', 'border-white/10');
             } else {
-                eraserBtn.classList.remove('bg-black', 'text-white');
-                eraserBtn.classList.add('bg-white', 'text-black');
+                eraserBtn.classList.remove('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
+                eraserBtn.classList.add('bg-slate-900', 'text-slate-300', 'border-white/10');
+            }
+            updateColorIndicators();
+        };
+
+        window.undo = () => {
+            if (historyStack.length > 0) {
+                let previousState = historyStack.pop();
+                let img = new Image();
+                img.onload = function () {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = previousState;
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
         };
 
-        function startPosition(e) { isDrawing = true; draw(e); }
-        function endPosition() { isDrawing = false; ctx.beginPath(); }
+        // Initialize indicator
+        updateColorIndicators();
+
+        // Update Brush Size label on slider change
+        sizePicker.addEventListener('input', (e) => {
+            sizeValue.textContent = `${e.target.value}px`;
+        });
+
+        // Drawing event positions
+        function startPosition(e) {
+            saveHistoryState();
+            isDrawing = true;
+            draw(e);
+        }
+        function endPosition() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
 
         function draw(e) {
             if (!isDrawing) return;
@@ -185,8 +444,8 @@
             const y = (clientY - rect.top) * scaleY;
 
             ctx.lineWidth = sizePicker.value;
-            // Eraser logic: if active, paint white (background color)
-            ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
+            // Draw slate-950 background color if erasing
+            ctx.strokeStyle = isEraser ? '#020617' : currentColor;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -194,7 +453,7 @@
             ctx.moveTo(x, y);
         }
 
-        // Event Listeners for PC and Mobile
+        // Canvas Handlers
         canvas.addEventListener('mousedown', startPosition);
         canvas.addEventListener('mouseup', endPosition);
         canvas.addEventListener('mousemove', draw);
@@ -202,50 +461,143 @@
         canvas.addEventListener('touchend', endPosition);
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
         
-        // Clear Button logic
         document.getElementById('clearDrawBtn').addEventListener('click', () => {
+            saveHistoryState();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
 
-        // 3. FIREBASE'E VERİ GÖNDERME İŞLEMLERİ
+        // --- SUBMITTING COMMENT & DRAWING LOGIC ---
         
-        // Yazı Gönderme
+        // Text submit
         document.getElementById('sendTextBtn').addEventListener('click', async () => {
             const textInput = document.getElementById('anonText').value;
-            if (!textInput.trim()) return alert("you cant send an empty box!");
+            if (!textInput.trim()) return alert("Write something first!");
 
             try {
                 await addDoc(collection(db, "guestbook"), {
-                     type: "text",
+                    type: "text",
                     content: textInput,
-                     timestamp: serverTimestamp()
-                 });
-                alert("sent!");
-                document.getElementById('anonText').value = ''; // Kutuyu temizle
+                    timestamp: serverTimestamp()
+                });
+                document.getElementById('anonText').value = ''; 
             } catch (e) {
-                console.error("ERROR:", e);
-                alert("your not supposed to see this!");
+                console.error("Firebase Error:", e);
+                alert("Something went wrong with submission.");
             }
         });
 
-        // Çizim Gönderme
+        // Drawing submit
         document.getElementById('sendDrawBtn').addEventListener('click', async () => {
-            // Çizimi Base64 resim koduna çevirir (veritabanına metin olarak kaydedebilmek için)
+            // Convert drawing to base64 encoding
             const imageData = canvas.toDataURL("image/png");
+            
+            // Basic detection if canvas is blank
+            const buffer = new Uint32Array(ctx.getImageData(0,0,canvas.width,canvas.height).data.buffer);
+            const isBlank = !buffer.some(color => color !== 0);
+            if (isBlank) return alert("Canvas is empty! Draw something first.");
 
             try {
-                 await addDoc(collection(db, "guestbook"), {
-                     type: "drawing",
-                     content: imageData,
-                     timestamp: serverTimestamp()
-                 });
-                alert("Sent!");
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Çizimi temizle
+                await addDoc(collection(db, "guestbook"), {
+                    type: "drawing",
+                    content: imageData,
+                    timestamp: serverTimestamp()
+                });
+                ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                historyStack = []; // Reset history stack on save
             } catch (e) {
-                console.error("error cuh", e);
-                alert("your not supposed to see this");
+                console.error("Firebase Error:", e);
+                alert("Something went wrong with submission.");
             }
         });
+
+        // --- REAL-TIME GUESTBOOK RETRIEVAL & RENDERING ---
+        const guestbookFeed = document.getElementById('guestbook-feed');
+        const feedLoader = document.getElementById('feed-loader');
+        const feedCounter = document.getElementById('feed-counter');
+
+        // Query last 20 guestbook entries, ordered by timestamp
+        const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"), limit(25));
+        
+        onSnapshot(q, (snapshot) => {
+            // Remove the loading screen
+            if (feedLoader) feedLoader.style.display = 'none';
+            
+            // Clear current list items
+            guestbookFeed.innerHTML = '';
+            
+            let count = 0;
+            snapshot.forEach((doc) => {
+                count++;
+                const data = doc.data();
+                
+                // Format relative or pretty date
+                let timeStr = "Recent";
+                if (data.timestamp) {
+                    const date = data.timestamp.toDate();
+                    timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " - " + date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+                }
+
+                // Create the card element
+                const entryCard = document.createElement('div');
+                entryCard.className = "p-3 bg-white/5 border border-white/5 hover:border-white/10 rounded-xl flex flex-col gap-1.5 transition-all duration-200 animate-fadeIn";
+                
+                let headerContent = '';
+                if (data.type === 'text') {
+                    headerContent = `
+                        <div class="flex items-center justify-between text-[10px] font-bold text-slate-400">
+                            <span class="text-violet-400"><i class="fa-regular fa-message mr-1"></i> Text Note</span>
+                            <span>${timeStr}</span>
+                        </div>
+                        <p class="text-xs text-white leading-relaxed font-semibold break-words whitespace-pre-wrap">${escapeHtml(data.content)}</p>
+                    `;
+                } else if (data.type === 'drawing') {
+                    headerContent = `
+                        <div class="flex items-center justify-between text-[10px] font-bold text-slate-400">
+                            <span class="text-pink-400"><i class="fa-solid fa-palette mr-1"></i> Sketch</span>
+                            <span>${timeStr}</span>
+                        </div>
+                        <div class="mt-1 bg-slate-950/90 rounded-lg p-1.5 border border-white/5">
+                            <img src="${data.content}" alt="Visitor Sketch" class="max-h-36 w-auto mx-auto object-contain rounded">
+                        </div>
+                    `;
+                }
+
+                entryCard.innerHTML = headerContent;
+                guestbookFeed.appendChild(entryCard);
+            });
+
+            // If empty guestbook
+            if (count === 0) {
+                guestbookFeed.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-slate-500 text-center p-6">
+                        <i class="fa-solid fa-feather-pointed text-2xl mb-2 text-slate-600"></i>
+                        <p class="text-xs font-bold uppercase tracking-wider">No signs left yet</p>
+                        <p class="text-[10px] mt-0.5">Be the very first to write or draw!</p>
+                    </div>
+                `;
+                feedCounter.textContent = "0 entries";
+            } else {
+                feedCounter.textContent = `${count} entries`;
+            }
+        }, (error) => {
+            console.error("Listen failed:", error);
+            if (feedLoader) {
+                feedLoader.innerHTML = `
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-xl"></i>
+                    <p class="text-xs font-bold text-slate-400 mt-1">Permission Denied / Connection Failed</p>
+                    <p class="text-[9px] text-slate-500">Could not read from database. Check Firestore rules.</p>
+                `;
+            }
+        });
+
+        // Basic HTML Escaper for security
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
     </script>
 </body>
 </html>
