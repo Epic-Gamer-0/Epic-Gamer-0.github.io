@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeoBlud | Profile</title>
+    <title>LeoBlud's Desktop</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for beautiful modern icons -->
+    <!-- FontAwesome for pixel-style and utility icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -18,312 +14,449 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        pixel: ['"Courier New"', 'Courier', 'monospace'],
                     },
-                    boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-                        'glass-inset': 'inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                    }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b0f19;
+        /* Win95 Retro 3D Border Effects */
+        .win-border-out {
+            border: 2px solid;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #404040;
+            border-bottom-color: #404040;
+            box-shadow: inset 1px 1px 0px #dfdfdf, inset -1px -1px 0px #808080;
         }
-        /* Custom Scrollbar for Bento Guestbook */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        .win-border-in {
+            border: 2px solid;
+            border-top-color: #808080;
+            border-left-color: #808080;
+            border-right-color: #ffffff;
+            border-bottom-color: #ffffff;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+        .win-btn-active:active {
+            border-top-color: #404040;
+            border-left-color: #404040;
+            border-right-color: #ffffff;
+            border-bottom-color: #ffffff;
+            box-shadow: inset 1px 1px 0px #808080;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+        
+        /* Win95 Classic Color Scheme */
+        .bg-win-grey { background-color: #c0c0c0; }
+        .bg-win-blue { background: linear-gradient(90deg, #000080, #1084d0); }
+        .bg-win-blue-inactive { background: #808080; }
+        .bg-win-desktop { background-color: #008080; } /* Classic Windows Teal */
+
+        /* Custom scrollbar for Windows 95 feel */
+        .win-scrollbar::-webkit-scrollbar {
+            width: 16px;
+            height: 16px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.35);
+        .win-scrollbar::-webkit-scrollbar-track {
+            background: #dfdfdf;
+            box-shadow: inset 1px 1px 0px #808080;
+        }
+        .win-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #404040;
+            border-bottom-color: #404040;
+        }
+        .win-scrollbar::-webkit-scrollbar-thumb:active {
+            border-top-color: #404040;
+            border-left-color: #404040;
+            border-right-color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        /* Draggable style overrides */
+        .window {
+            position: absolute;
+            z-index: 10;
+        }
+        
+        /* Custom desktop icon grid */
+        .desktop-icon-grid {
+            display: grid;
+            grid-template-rows: repeat(auto-fill, 80px);
+            grid-auto-flow: column;
+            justify-content: start;
+            align-content: start;
         }
     </style>
 </head>
-<body class="min-h-screen bg-cover bg-center flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden" 
-      style="background-image: url('https://i.imgur.com/x0J94r1.jpeg'); background-attachment: fixed;">
+<body class="min-h-screen bg-win-desktop overflow-hidden select-none font-mono relative text-black text-sm" 
+      style="background-image: url('https://i.imgur.com/x0J94r1.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    
+    <!-- Background Dim/Blur overlay to keep desktop readable -->
+    <div class="absolute inset-0 bg-teal-950/45 backdrop-blur-[3px] z-0"></div>
 
-    <!-- Background Overlay for modern dark glassmorphic look -->
-    <div class="absolute inset-0 bg-slate-950/65 backdrop-blur-[8px] z-0"></div>
-
-    <div class="container mx-auto max-w-6xl z-10 relative">
+    <!-- MAIN DESKTOP GRID -->
+    <div class="absolute inset-0 p-4 pb-16 z-10 desktop-icon-grid gap-4 flex flex-col md:flex-wrap">
         
-        <!-- Header / Logo section (Sleek minimalist tag) -->
-        <div class="flex justify-between items-center mb-6 px-2">
-            <div class="flex items-center gap-2">
-                <span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Leo's Digital Space</span>
+        <!-- Icon 1: Profile (My Computer) -->
+        <button onclick="openWindow('win-profile')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-yellow-300 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-solid fa-computer text-blue-100"></i>
             </div>
-            <div class="text-[10px] text-slate-400 bg-slate-900/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-sm">
-                v2.0 • Reconstructed
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">My Profile</span>
+        </button>
+
+        <!-- Icon 2: About Me (Notepad) -->
+        <button onclick="openWindow('win-about')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-slate-100 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-regular fa-file-lines text-slate-100"></i>
+            </div>
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">About.txt</span>
+        </button>
+
+        <!-- Icon 3: Paint (Canvas Drawing) -->
+        <button onclick="openWindow('win-paint')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-red-400 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-solid fa-palette text-pink-400"></i>
+            </div>
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Paint Brush</span>
+        </button>
+
+        <!-- Icon 4: Guestbook Feed (Internet Explorer) -->
+        <button onclick="openWindow('win-guestbook')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-cyan-400 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-solid fa-globe text-cyan-300"></i>
+            </div>
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Board.exe</span>
+        </button>
+
+        <!-- Icon 5: Spotify (Media Player) -->
+        <button onclick="openWindow('win-spotify')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-emerald-400 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-brands fa-spotify text-emerald-400"></i>
+            </div>
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Player</span>
+        </button>
+
+        <!-- Icon 6: Social Connections -->
+        <button onclick="openWindow('win-socials')" class="w-20 h-20 flex flex-col items-center justify-center gap-1 group focus:outline-none rounded hover:bg-blue-600/20">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl text-indigo-400 drop-shadow-md group-hover:scale-105 transition duration-150">
+                <i class="fa-solid fa-network-wired text-indigo-300"></i>
+            </div>
+            <span class="text-xs text-white text-center font-bold px-1 py-0.5 rounded group-focus:bg-blue-800 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Network</span>
+        </button>
+    </div>
+
+    <!-- ==================== RETRO WINDOWS ==================== -->
+
+    <!-- Window 1: Profile (My Computer style) -->
+    <div id="win-profile" class="window bg-win-grey win-border-out p-1 w-[320px] top-[10%] left-[5%] md:left-[15%]" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-solid fa-computer text-xs"></i>
+                <span>My Profile</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-profile')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-profile')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
             </div>
         </div>
-
-        <!-- Bento Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+        <!-- Menu Bar -->
+        <div class="flex gap-3 px-2 py-0.5 text-xs border-b border-slate-400">
+            <span class="hover:underline cursor-pointer">File</span>
+            <span class="hover:underline cursor-pointer">Edit</span>
+            <span class="hover:underline cursor-pointer">View</span>
+            <span class="hover:underline cursor-pointer">Help</span>
+        </div>
+        <!-- Window Body -->
+        <div class="p-4 flex flex-col items-center text-center">
+            <!-- Profile avatar with retro border -->
+            <div class="win-border-in p-1 bg-white mb-3">
+                <img src="https://i.imgur.com/IFkedEG.png" alt="Avatar" class="w-28 h-28 object-cover">
+            </div>
+            <h2 class="text-xl font-black tracking-tight text-blue-900">LeoBlud</h2>
+            <p class="text-xs font-bold text-slate-600 mb-3">@leovermillion</p>
             
-            <!-- COLUMN 1: Profile & About (Span 4) -->
-            <div class="md:col-span-4 flex flex-col gap-5">
-                
-                <!-- Card 1: Main Profile Info -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-6 shadow-glass shadow-glass-inset backdrop-blur-xl flex flex-col items-center text-center group hover:border-violet-500/30 transition-all duration-300">
-                    <!-- Avatar with pulsing accent glow -->
-                    <div class="relative w-36 h-36 rounded-full p-[3px] bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 shadow-lg mb-4 hover:scale-105 transition duration-300">
-                        <div class="w-full h-full rounded-full overflow-hidden bg-slate-950 border border-slate-950">
-                            <img src="https://i.imgur.com/IFkedEG.png" alt="Profile" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    
-                    <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1">LeoBlud</h1>
-                    <h2 class="text-sm font-semibold text-violet-400 mb-3">@leovermillion</h2>
-                    
-                    <!-- Bio Quick Details Chips -->
-                    <div class="flex flex-wrap gap-2 justify-center mb-4">
-                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
-                            <i class="fa-solid fa-venus-mars text-[10px] text-pink-400"></i> He/Him
-                        </span>
-                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
-                            <i class="fa-solid fa-cake-candles text-[10px] text-amber-400"></i> Jan 9th
-                        </span>
-                        <span class="text-xs font-semibold px-2.5 py-1 bg-white/5 border border-white/5 text-slate-300 rounded-lg flex items-center gap-1.5">
-                            <i class="fa-solid fa-earth-americas text-[10px] text-teal-400"></i> Mexican
-                        </span>
-                    </div>
-
-                    <!-- Modern Quick Bio Status -->
-                    <div class="w-full pt-3 border-t border-white/5 flex items-center justify-around text-xs text-slate-400">
-                        <div>
-                            <span class="block text-white font-bold">16yo</span>
-                            <span>Age</span>
-                        </div>
-                        <div class="border-r border-white/5 h-6"></div>
-                        <div>
-                            <span class="block text-white font-bold">Guitar</span>
-                            <span>Hobby</span>
-                        </div>
-                        <div class="border-r border-white/5 h-6"></div>
-                        <div>
-                            <span class="block text-emerald-400 font-bold">Active</span>
-                            <span>Status</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: About Me (Chat Bubble Styling) -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="bg-violet-500/20 p-1.5 rounded-lg">
-                            <i class="fa-solid fa-quote-left text-violet-400 text-xs"></i>
-                        </div>
-                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">About Leo</h3>
-                    </div>
-                    <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                        hi, i'm leoblud (or just leo)! i'm a Mexican high schooler. i love a ton of things including normalsville, playing the guitar, and pretty much various random stuff. ask me anything—i'll either know it or i'll ask what it is because i'm super curious. welcome to my space!
-                    </p>
-                </div>
-
-                <!-- Card 3: Social Links -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Connect with me</h3>
-                    
-                    <div class="flex flex-col gap-3">
-                        <!-- Discord -->
-                        <div class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-xl group/soc hover:bg-violet-500/10 hover:border-violet-500/20 transition-all duration-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center">
-                                    <i class="fa-brands fa-discord text-lg"></i>
-                                </div>
-                                <div>
-                                    <span class="block text-xs text-slate-400 font-semibold">Discord</span>
-                                    <span class="text-sm font-bold text-white">leovermillion</span>
-                                </div>
-                            </div>
-                            <button onclick="navigator.clipboard.writeText('leovermillion'); alert('Copied Discord ID!');" 
-                                    class="text-xs text-slate-400 bg-white/5 hover:bg-white/10 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/5 transition">
-                                Copy
-                            </button>
-                        </div>
-
-                        <!-- TikTok -->
-                        <a href="https://www.tiktok.com/@abbeyapologist" target="_blank" 
-                           class="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-xl group/soc hover:bg-pink-500/10 hover:border-pink-500/20 transition-all duration-200">
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-lg bg-pink-600/20 text-pink-400 flex items-center justify-center">
-                                    <i class="fa-brands fa-tiktok text-lg"></i>
-                                </div>
-                                <div>
-                                    <span class="block text-xs text-slate-400 font-semibold">TikTok</span>
-                                    <span class="text-sm font-bold text-white">@abbeyapologist</span>
-                                </div>
-                            </div>
-                            <span class="text-xs text-slate-400 bg-white/5 group-hover/soc:bg-white/10 group-hover/soc:text-white px-2.5 py-1.5 rounded-lg border border-white/5 transition flex items-center gap-1">
-                                Visit <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-
+            <div class="win-border-in bg-white w-full p-2.5 text-left text-xs font-semibold space-y-1.5">
+                <p><span class="text-blue-800 font-bold">Status:</span> Active</p>
+                <p><span class="text-blue-800 font-bold">Pronouns:</span> He/Him</p>
+                <p><span class="text-blue-800 font-bold">Birthday:</span> Jan 9th (01/09)</p>
+                <p><span class="text-blue-800 font-bold">Location:</span> Mexico</p>
             </div>
-
-            <!-- COLUMN 2: Spotify & Live Guestbook Feed (Span 4) -->
-            <div class="md:col-span-4 flex flex-col gap-5">
-                
-                <!-- Card 4: Spotify Integration -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-4 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-3 px-1">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-brands fa-spotify text-emerald-400 text-lg"></i>
-                            <h3 class="text-xs font-bold text-white uppercase tracking-widest">On Repeat</h3>
-                        </div>
-                        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    </div>
-                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/54SoZ23EStgVXkux2DJ9Yz?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
-
-                <!-- Card 5: Real-time Guestbook Feed (MASSIVE upgrade) -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl flex flex-col h-[400px] hover:border-violet-500/30 transition-all duration-300">
-                    <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
-                        <div class="flex items-center gap-2">
-                            <div class="bg-purple-500/20 p-1.5 rounded-lg">
-                                <i class="fa-solid fa-comments text-purple-400 text-xs"></i>
-                            </div>
-                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Visitor Board</h3>
-                        </div>
-                        <span id="feed-counter" class="text-xs font-bold bg-white/5 border border-white/5 text-slate-400 px-2 py-0.5 rounded-full">Loading...</span>
-                    </div>
-
-                    <!-- Scrollable Guestbook Entries -->
-                    <div id="guestbook-feed" class="flex-1 overflow-y-auto space-y-3 pr-1 custom-scrollbar">
-                        <!-- Loading Indicator -->
-                        <div id="feed-loader" class="h-full flex flex-col items-center justify-center text-slate-400 gap-2">
-                            <i class="fa-solid fa-circle-notch animate-spin text-xl text-violet-400"></i>
-                            <p class="text-xs font-semibold">Tuning into database...</p>
-                        </div>
-                        <!-- Entries will be dynamically inserted here -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- COLUMN 3: Guestbook Inputs (Span 4) -->
-            <div class="md:col-span-4 flex flex-col gap-5">
-                
-                <!-- Card 6: Write/Draw Guestbook Form -->
-                <div class="bg-slate-900/75 border border-white/10 rounded-2xl p-5 shadow-glass shadow-glass-inset backdrop-blur-xl hover:border-violet-500/30 transition-all duration-300">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="bg-pink-500/20 p-1.5 rounded-lg">
-                            <i class="fa-solid fa-signature text-pink-400 text-xs"></i>
-                        </div>
-                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Leave a Trace</h3>
-                    </div>
-
-                    <!-- Text comment area -->
-                    <div class="mb-5">
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Leave a comment</label>
-                        <div class="relative">
-                            <textarea id="anonText" rows="2" 
-                                      class="w-full bg-slate-950/60 border border-white/10 rounded-xl p-3 text-sm text-white font-medium placeholder-slate-500 focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 resize-none transition-all duration-200" 
-                                      placeholder="Write something cool..."></textarea>
-                        </div>
-                        <button id="sendTextBtn" class="mt-2 w-full bg-violet-600 hover:bg-violet-500 text-white text-xs font-extrabold py-2.5 rounded-xl border border-violet-500/20 transition-all duration-200 shadow-lg shadow-violet-600/15 flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-paper-plane text-[10px]"></i> SEND COMMENT
-                        </button>
-                    </div>
-
-                    <!-- Drawing canvas container -->
-                    <div class="border-t border-white/5 pt-4">
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Or draw something</label>
-                        
-                        <!-- Mini drawing toolbar -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-950/60 border border-white/10 p-2.5 rounded-xl mb-3">
-                            <!-- Colors dots -->
-                            <div class="flex items-center gap-2">
-                                <button type="button" onclick="changeColor('#ffffff')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #ffffff;" title="White">
-                                    <span id="color-indicator-#ffffff" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
-                                </button>
-                                <button type="button" onclick="changeColor('#a78bfa')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #a78bfa;" title="Violet">
-                                    <span id="color-indicator-#a78bfa" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
-                                </button>
-                                <button type="button" onclick="changeColor('#f43f5e')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #f43f5e;" title="Rose">
-                                    <span id="color-indicator-#f43f5e" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
-                                </button>
-                                <button type="button" onclick="changeColor('#10b981')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #10b981;" title="Emerald">
-                                    <span id="color-indicator-#10b981" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
-                                </button>
-                                <button type="button" onclick="changeColor('#f59e0b')" class="w-5 h-5 rounded-full border border-white/20 relative" style="background-color: #f59e0b;" title="Amber">
-                                    <span id="color-indicator-#f59e0b" class="absolute inset-0 rounded-full border-2 border-slate-950 scale-75 hidden"></span>
-                                </button>
-                            </div>
-
-                            <!-- Eraser & Undo -->
-                            <div class="flex items-center gap-1.5">
-                                <button type="button" id="eraserBtn" onclick="toggleEraser()" 
-                                        class="text-[10px] font-bold px-2 py-1 border border-white/10 bg-slate-900 text-slate-300 rounded-lg hover:bg-slate-800 transition uppercase flex items-center gap-1">
-                                    <i class="fa-solid fa-eraser text-[9px]"></i> Eraser
-                                </button>
-                                <button type="button" id="undoBtn" onclick="undo()" 
-                                        class="text-[10px] font-bold px-2 py-1 border border-white/10 bg-slate-900 text-slate-300 rounded-lg hover:bg-slate-800 transition uppercase flex items-center gap-1" title="Undo Last Stroke">
-                                    <i class="fa-solid fa-rotate-left text-[9px]"></i> Undo
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Canvas Drawing controls & display -->
-                        <div class="relative bg-slate-950/70 rounded-xl overflow-hidden border border-white/10">
-                            <!-- Responsive Canvas -->
-                            <canvas id="drawCanvas" width="400" height="230" class="w-full bg-slate-950 cursor-crosshair touch-none block"></canvas>
-                        </div>
-
-                        <!-- Brush Size and Custom Labels -->
-                        <div class="mt-3 mb-4 flex items-center justify-between gap-3 px-1">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                                <i class="fa-solid fa-paint-brush text-[9px]"></i> Brush Size:
-                            </span>
-                            <div class="flex-1 flex items-center gap-2">
-                                <input type="range" id="sizePicker" min="1" max="25" value="4" class="flex-1 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-violet-500">
-                                <span id="sizeValue" class="text-xs font-bold text-slate-300 w-5 text-right">4px</span>
-                            </div>
-                        </div>
-
-                        <!-- Drawing Buttons -->
-                        <div class="grid grid-cols-3 gap-2">
-                            <button type="button" id="clearDrawBtn" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold py-2 border border-white/5 hover:border-white/10 rounded-xl transition uppercase text-[10px] flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-trash-can"></i> Clear
-                            </button>
-                            <button type="button" id="sendDrawBtn" class="col-span-2 bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-white font-extrabold py-2 rounded-xl transition uppercase text-[10px] tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-violet-600/15">
-                                <i class="fa-solid fa-cloud-arrow-up"></i> Send Drawing
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-8 text-center text-xs text-slate-500">
-            <p>being just me</p>
         </div>
     </div>
 
-    <!-- Firebase Connection & Interactive Scripts -->
+    <!-- Window 2: About Me (Notepad style) -->
+    <div id="win-about" class="window bg-win-grey win-border-out p-1 w-[340px] md:w-[400px] top-[18%] left-[8%] md:left-[45%] hidden" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-regular fa-file-lines text-xs"></i>
+                <span>About.txt - Notepad</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-about')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-about')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
+            </div>
+        </div>
+        <div class="flex gap-3 px-2 py-0.5 text-xs border-b border-slate-400">
+            <span class="hover:underline cursor-pointer">File</span>
+            <span class="hover:underline cursor-pointer">Search</span>
+            <span class="hover:underline cursor-pointer">Help</span>
+        </div>
+        <div class="p-2">
+            <textarea readonly class="win-border-in w-full h-44 bg-white p-3 text-xs leading-relaxed focus:outline-none resize-none font-mono"
+>hi, i'm leoblud (or just leo)! 
+
+i'm a mexican high schooler. i like a ton of things including normalsville, playing the guitar, and various random stuff. 
+
+ask me anything - i'll either know it or i'll ask what it is because i'm indeed curious. 
+
+okhihellobye!</textarea>
+        </div>
+    </div>
+
+    <!-- Window 3: Paint Brush (MS Paint style) -->
+    <div id="win-paint" class="window bg-win-grey win-border-out p-1 w-[330px] md:w-[420px] top-[5%] md:top-[12%] left-[4%] md:left-[35%] hidden" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-solid fa-palette text-xs"></i>
+                <span>Paint Brush - LeoArt.bmp</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-paint')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-paint')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
+            </div>
+        </div>
+        <div class="flex gap-3 px-2 py-0.5 text-xs border-b border-slate-400">
+            <span class="hover:underline cursor-pointer">File</span>
+            <span class="hover:underline cursor-pointer">Image</span>
+            <span class="hover:underline cursor-pointer">Options</span>
+        </div>
+        
+        <!-- Canvas paint space -->
+        <div class="p-2 flex flex-col">
+            <!-- Paint Toolbar -->
+            <div class="flex items-center justify-between bg-win-grey border-b border-slate-400 pb-2 mb-2">
+                <!-- Color palette selectors -->
+                <div class="flex items-center gap-1 bg-white p-1 win-border-in">
+                    <button type="button" onclick="changeColor('#000000')" class="w-4 h-4 border border-black" style="background-color: #000000;" title="Black"></button>
+                    <button type="button" onclick="changeColor('#ff0000')" class="w-4 h-4 border border-black" style="background-color: #ff0000;" title="Red"></button>
+                    <button type="button" onclick="changeColor('#0000ff')" class="w-4 h-4 border border-black" style="background-color: #0000ff;" title="Blue"></button>
+                    <button type="button" onclick="changeColor('#008000')" class="w-4 h-4 border border-black" style="background-color: #008000;" title="Green"></button>
+                    <button type="button" onclick="changeColor('#ffff00')" class="w-4 h-4 border border-black" style="background-color: #ffff00;" title="Yellow"></button>
+                    <button type="button" onclick="changeColor('#ffffff')" class="w-4 h-4 border border-black" style="background-color: #ffffff;" title="White"></button>
+                </div>
+                <!-- Controls -->
+                <div class="flex gap-1">
+                    <button type="button" id="eraserBtn" onclick="toggleEraser()" class="win-border-out bg-win-grey px-2 py-0.5 text-[10px] font-bold win-btn-active uppercase">Eraser</button>
+                    <button type="button" id="undoBtn" onclick="undo()" class="win-border-out bg-win-grey px-2 py-0.5 text-[10px] font-bold win-btn-active uppercase">Undo</button>
+                </div>
+            </div>
+
+            <!-- Drawing Canvas border-in -->
+            <div class="win-border-in bg-white relative">
+                <canvas id="drawCanvas" width="400" height="200" class="w-full bg-white block cursor-crosshair touch-none"></canvas>
+            </div>
+
+            <!-- Brush Size Tool bar -->
+            <div class="mt-2.5 flex items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-1.5 flex-1">
+                    <span class="font-bold text-[10px]">Brush Size:</span>
+                    <input type="range" id="sizePicker" min="1" max="20" value="4" class="flex-1 cursor-pointer">
+                    <span id="sizeValue" class="font-bold">4px</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button type="button" id="clearDrawBtn" class="win-border-out bg-win-grey px-2 py-1 text-[10px] font-bold win-btn-active uppercase">Clear</button>
+                    <button type="button" id="sendDrawBtn" class="win-border-out bg-win-grey px-2 py-1 text-[10px] font-black text-blue-900 win-btn-active uppercase">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window 4: Board Reader (Internet Explorer style) -->
+    <div id="win-guestbook" class="window bg-win-grey win-border-out p-1 w-[350px] md:w-[450px] top-[15%] md:top-[8%] left-[2%] md:left-[50%] hidden" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-solid fa-globe text-xs"></i>
+                <span>Internet Explorer - Board.exe</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-guestbook')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-guestbook')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
+            </div>
+        </div>
+        <!-- Address Bar -->
+        <div class="flex items-center gap-2 p-1.5 border-b border-slate-400 text-xs">
+            <span class="text-slate-500 font-bold">Address:</span>
+            <div class="win-border-in bg-white px-2 py-0.5 flex-1 text-slate-700 truncate font-mono text-[11px]">
+                https://leos-guestbook-board.net/
+            </div>
+            <button onclick="location.reload()" class="win-border-out bg-win-grey px-2 py-0.5 text-[10px] win-btn-active font-bold">Go</button>
+        </div>
+
+        <div class="p-3 flex flex-col h-[380px]">
+            <!-- Write message block inside IE -->
+            <div class="mb-4">
+                <span class="block text-xs font-bold mb-1">Write on Leo's wall:</span>
+                <div class="flex gap-1.5">
+                    <input type="text" id="anonText" placeholder="Say something cool here..." class="win-border-in bg-white px-2 py-1.5 text-xs flex-1 focus:outline-none">
+                    <button id="sendTextBtn" class="win-border-out bg-win-grey px-3 py-1 text-xs font-bold win-btn-active uppercase">Post</button>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-400 pt-2 flex-1 flex flex-col min-h-0">
+                <div class="flex justify-between items-center mb-1.5">
+                    <span class="text-xs font-bold text-slate-700">Database Feed:</span>
+                    <span id="feed-counter" class="text-[10px] font-bold bg-slate-200 px-1.5 py-0.5 win-border-in">0 entries</span>
+                </div>
+                
+                <!-- Live message stream -->
+                <div id="guestbook-feed" class="win-border-in bg-white flex-1 overflow-y-auto p-2 space-y-2.5 win-scrollbar">
+                    <div id="feed-loader" class="h-full flex flex-col items-center justify-center text-slate-500 text-center py-8">
+                        <i class="fa-solid fa-spinner animate-spin text-lg mb-1"></i>
+                        <p class="text-[11px] font-bold">Connecting to guestbook database...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window 5: Spotify Media Player -->
+    <div id="win-spotify" class="window bg-win-grey win-border-out p-1 w-[320px] top-[22%] left-[10%] md:left-[22%] hidden" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-brands fa-spotify text-xs"></i>
+                <span>Spotify Media Player</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-spotify')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-spotify')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
+            </div>
+        </div>
+        <div class="p-1.5">
+            <iframe style="border-radius:0px" src="https://open.spotify.com/embed/playlist/54SoZ23EStgVXkux2DJ9Yz?utm_source=generator" width="100%" height="340" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- Window 6: Social Shortcuts (Network Neighborhood style) -->
+    <div id="win-socials" class="window bg-win-grey win-border-out p-1 w-[300px] top-[30%] left-[5%] md:left-[30%] hidden" onmousedown="bringToFront(this)">
+        <div class="window-header bg-win-blue text-white px-2 py-1 flex items-center justify-between cursor-move">
+            <div class="flex items-center gap-1.5 font-bold">
+                <i class="fa-solid fa-network-wired text-xs"></i>
+                <span>Network Connections</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="toggleMinimize('win-socials')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">_</button>
+                <button onclick="closeWindow('win-socials')" class="win-border-out bg-win-grey text-black px-1.5 py-0.5 text-[9px] font-extrabold win-btn-active">X</button>
+            </div>
+        </div>
+        <div class="p-3 text-xs">
+            <span class="block font-bold mb-2.5">Local Shortcuts:</span>
+            
+            <div class="space-y-2">
+                <!-- Discord -->
+                <div class="flex items-center justify-between p-2 bg-white win-border-in">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-brands fa-discord text-indigo-600 text-base"></i>
+                        <div>
+                            <p class="font-bold leading-none">Discord</p>
+                            <p class="text-[10px] text-slate-500">leovermillion</p>
+                        </div>
+                    </div>
+                    <button onclick="navigator.clipboard.writeText('leovermillion'); alert('Copied Discord username!');" 
+                            class="win-border-out bg-win-grey px-2 py-0.5 text-[10px] font-bold win-btn-active">Copy</button>
+                </div>
+
+                <!-- TikTok -->
+                <div class="flex items-center justify-between p-2 bg-white win-border-in">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-brands fa-tiktok text-pink-600 text-base"></i>
+                        <div>
+                            <p class="font-bold leading-none">TikTok</p>
+                            <p class="text-[10px] text-slate-500">@abbeyapologist</p>
+                        </div>
+                    </div>
+                    <a href="https://www.tiktok.com/@abbeyapologist" target="_blank" 
+                       class="win-border-out bg-win-grey px-2 py-0.5 text-[10px] font-bold text-center win-btn-active">Visit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== RETRO WIN95 TASKBAR ==================== -->
+    <div class="absolute bottom-0 left-0 right-0 h-11 bg-win-grey border-t-2 border-white flex items-center justify-between px-1.5 z-40 select-none shadow-[0_-2px_0px_rgba(0,0,0,0.15)]">
+        
+        <div class="flex items-center gap-2">
+            <!-- Start button -->
+            <button onclick="toggleStartMenu()" class="win-border-out bg-win-grey h-8 px-2 flex items-center gap-1.5 font-black win-btn-active text-xs">
+                <i class="fa-brands fa-windows text-blue-800 text-sm"></i>
+                <span>Start</span>
+            </button>
+            
+            <!-- Divider -->
+            <div class="h-6 border-l border-slate-400 border-r border-white"></div>
+            
+            <!-- Opened Windows Taskbar entries -->
+            <div id="taskbar-apps" class="flex items-center gap-1.5">
+                <!-- App markers will be created in JS dynamically -->
+            </div>
+        </div>
+
+        <!-- System Clock Tray -->
+        <div class="win-border-in bg-win-grey h-7 px-3.5 flex items-center justify-center gap-2 text-xs font-bold font-mono">
+            <i class="fa-solid fa-volume-high text-slate-600 text-[10px]"></i>
+            <span id="system-clock">12:00 PM</span>
+        </div>
+    </div>
+
+    <!-- RETRO START MENU (Popup) -->
+    <div id="start-menu" class="absolute bottom-11 left-1.5 w-60 bg-win-grey win-border-out p-1 z-50 flex hidden">
+        <!-- Sidebar banner -->
+        <div class="w-8 bg-win-blue text-white font-black flex items-end justify-center py-2 relative overflow-hidden shrink-0">
+            <span class="rotate-270 origin-bottom-left absolute left-4 bottom-2 text-sm uppercase tracking-widest block transform -rotate-90 origin-left whitespace-nowrap">Leo95</span>
+        </div>
+        
+        <!-- Options -->
+        <div class="flex-1 flex flex-col py-1 text-xs">
+            <button onclick="openWindow('win-profile'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-solid fa-user text-blue-700 w-4 text-center"></i>
+                <span class="font-bold">My Profile</span>
+            </button>
+            <button onclick="openWindow('win-about'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-regular fa-file-lines text-slate-700 w-4 text-center"></i>
+                <span class="font-bold">About Leo</span>
+            </button>
+            <button onclick="openWindow('win-paint'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-solid fa-palette text-pink-600 w-4 text-center"></i>
+                <span class="font-bold">Paint Brush</span>
+            </button>
+            <button onclick="openWindow('win-guestbook'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-solid fa-globe text-cyan-600 w-4 text-center"></i>
+                <span class="font-bold">Guestbook Board</span>
+            </button>
+            <button onclick="openWindow('win-spotify'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-brands fa-spotify text-emerald-600 w-4 text-center"></i>
+                <span class="font-bold">Spotify Player</span>
+            </button>
+            
+            <div class="border-t border-slate-400 my-1"></div>
+            
+            <button onclick="alert('Windows is closing down... (just kidding!)'); toggleStartMenu();" class="flex items-center gap-3.5 px-3 py-2 text-left hover:bg-blue-800 hover:text-white">
+                <i class="fa-solid fa-power-off text-red-600 w-4 text-center"></i>
+                <span class="font-bold">Shut Down...</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== LOGIC / JS ENVIRONMENT ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // FIREBASE CONFIGURATION
+        // FIREBASE INITIALIZATION
         const firebaseConfig = {
             apiKey: "AIzaSyC60xJLAo_FD7MOYgxq98GJTrF0VCugQ3I",
             authDomain: "leos-blud.firebaseapp.com",
@@ -332,12 +465,210 @@
             messagingSenderId: "306846163333",
             appId: "1:306846163333:web:94d01ca0c8ecd9e2e0e4ec"
         };
-        
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- DRAWING CANVAS LOGIC WITH UNDO HISTORY ---
+        // --- RETRO WORKSPACE DESKTOP CONTROL ---
+        let currentZIndex = 20;
+        const windowRegistry = ['win-profile', 'win-about', 'win-paint', 'win-guestbook', 'win-spotify', 'win-socials'];
+
+        window.bringToFront = (element) => {
+            currentZIndex++;
+            element.style.zIndex = currentZIndex;
+            
+            // Mark title-bar as active (blue) vs inactive (grey)
+            windowRegistry.forEach(id => {
+                const win = document.getElementById(id);
+                if (win) {
+                    const header = win.querySelector('.window-header');
+                    if (id === element.id) {
+                        header.classList.remove('bg-win-blue-inactive');
+                        header.classList.add('bg-win-blue');
+                    } else {
+                        header.classList.remove('bg-win-blue');
+                        header.classList.add('bg-win-blue-inactive');
+                    }
+                }
+            });
+            updateTaskbarActiveState(element.id);
+        };
+
+        window.openWindow = (id) => {
+            const win = document.getElementById(id);
+            if (win) {
+                win.classList.remove('hidden');
+                bringToFront(win);
+                rebuildTaskbar();
+            }
+        };
+
+        window.closeWindow = (id) => {
+            const win = document.getElementById(id);
+            if (win) {
+                win.classList.add('hidden');
+                rebuildTaskbar();
+            }
+        };
+
+        window.toggleMinimize = (id) => {
+            const win = document.getElementById(id);
+            if (win) {
+                win.classList.toggle('hidden');
+                rebuildTaskbar();
+            }
+        };
+
+        window.toggleStartMenu = () => {
+            const startMenu = document.getElementById('start-menu');
+            startMenu.classList.toggle('hidden');
+        };
+
+        // Rebuild Bottom Taskbar Buttons based on open windows
+        function rebuildTaskbar() {
+            const taskbarContainer = document.getElementById('taskbar-apps');
+            taskbarContainer.innerHTML = '';
+
+            windowRegistry.forEach(id => {
+                const win = document.getElementById(id);
+                if (win && !win.classList.contains('hidden')) {
+                    const title = win.querySelector('.window-header span').textContent;
+                    const iconClass = win.querySelector('.window-header i').className;
+
+                    const btn = document.createElement('button');
+                    btn.className = "win-border-out bg-win-grey h-8 px-2 flex items-center gap-1.5 max-w-[120px] text-xs font-bold truncate win-btn-active";
+                    btn.innerHTML = `<i class="${iconClass}"></i><span class="truncate">${title}</span>`;
+                    btn.onclick = () => {
+                        bringToFront(win);
+                    };
+                    btn.setAttribute('data-window-id', id);
+                    taskbarContainer.appendChild(btn);
+                }
+            });
+        }
+
+        function updateTaskbarActiveState(activeId) {
+            const buttons = document.querySelectorAll('#taskbar-apps button');
+            buttons.forEach(btn => {
+                const winId = btn.getAttribute('data-window-id');
+                if (winId === activeId) {
+                    btn.style.backgroundColor = '#dfdfdf';
+                    btn.style.borderTopColor = '#404040';
+                    btn.style.borderLeftColor = '#404040';
+                    btn.style.borderRightColor = '#ffffff';
+                    btn.style.borderBottomColor = '#ffffff';
+                } else {
+                    btn.style.backgroundColor = '#c0c0c0';
+                    btn.style.borderTopColor = '#ffffff';
+                    btn.style.borderLeftColor = '#ffffff';
+                    btn.style.borderRightColor = '#404040';
+                    btn.style.borderBottomColor = '#404040';
+                }
+            });
+        }
+
+        // Close start menu if clicked elsewhere
+        document.addEventListener('click', (e) => {
+            const startMenu = document.getElementById('start-menu');
+            const startBtn = e.target.closest('button');
+            if (startBtn && startBtn.textContent.includes('Start')) return;
+            if (!e.target.closest('#start-menu') && startMenu && !startMenu.classList.contains('hidden')) {
+                startMenu.classList.add('hidden');
+            }
+        });
+
+        // Setup Draggability for all windows
+        windowRegistry.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                makeDraggable(el);
+            }
+        });
+
+        function makeDraggable(windowEl) {
+            const titleBar = windowEl.querySelector('.window-header');
+            if (!titleBar) return;
+            
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            titleBar.onmousedown = dragMouseDown;
+            titleBar.ontouchstart = dragTouchStart;
+            
+            function dragMouseDown(e) {
+                if (e.target.closest('button')) return; // skip buttons
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                bringToFront(windowEl);
+            }
+            
+            function dragTouchStart(e) {
+                if (e.target.closest('button')) return;
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+                document.ontouchend = closeDragElement;
+                document.ontouchmove = elementTouchDrag;
+                bringToFront(windowEl);
+            }
+            
+            function elementDrag(e) {
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                
+                // Boundaries restriction (keep title visible)
+                let newTop = windowEl.offsetTop - pos2;
+                let newLeft = windowEl.offsetLeft - pos1;
+                if (newTop < 0) newTop = 0;
+                if (newTop > window.innerHeight - 50) newTop = window.innerHeight - 50;
+
+                windowEl.style.top = newTop + "px";
+                windowEl.style.left = newLeft + "px";
+            }
+            
+            function elementTouchDrag(e) {
+                pos1 = pos3 - e.touches[0].clientX;
+                pos2 = pos4 - e.touches[0].clientY;
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+                
+                let newTop = windowEl.offsetTop - pos2;
+                let newLeft = windowEl.offsetLeft - pos1;
+                if (newTop < 0) newTop = 0;
+                if (newTop > window.innerHeight - 50) newTop = window.innerHeight - 50;
+
+                windowEl.style.top = newTop + "px";
+                windowEl.style.left = newLeft + "px";
+            }
+            
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                document.ontouchend = null;
+                document.ontouchmove = null;
+            }
+        }
+
+        // Clock Function
+        function updateClock() {
+            const clockEl = document.getElementById('system-clock');
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 0 matches 12
+            clockEl.textContent = `${hours}:${minutes} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Rebuild Taskbar on initialization
+        rebuildTaskbar();
+
+
+        // --- RETRO MS PAINT DRAWING CANVAS LOGIC ---
         const canvas = document.getElementById('drawCanvas');
         const ctx = canvas.getContext('2d');
         const sizePicker = document.getElementById('sizePicker');
@@ -345,93 +676,73 @@
         const eraserBtn = document.getElementById('eraserBtn');
 
         let isDrawing = false;
-        let currentColor = '#ffffff';
+        let currentColor = '#000000';
         let isEraser = false;
-        
-        // History Stack for Undo functionality
         let historyStack = [];
 
-        // Smooth Brush Rendering Config
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        // Push state to undo stack
-        function saveHistoryState() {
-            if (historyStack.length >= 25) {
-                historyStack.shift(); // Limit memory footprint
-            }
+        // Keep canvas history states
+        function saveHistory() {
+            if (historyStack.length >= 20) historyStack.shift();
             historyStack.push(canvas.toDataURL());
         }
 
-        // Active Color Dot Highlighting
-        function updateColorIndicators() {
-            const colors = ['#ffffff', '#a78bfa', '#f43f5e', '#10b981', '#f59e0b'];
-            colors.forEach(col => {
-                const indicator = document.getElementById(`color-indicator-${col}`);
-                if (indicator) {
-                    if (currentColor === col && !isEraser) {
-                        indicator.classList.remove('hidden');
-                    } else {
-                        indicator.classList.add('hidden');
-                    }
-                }
-            });
-        }
-
-        // Expose functions globally for HTML onclick events
         window.changeColor = (color) => {
             isEraser = false;
             currentColor = color;
-            eraserBtn.classList.remove('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
-            eraserBtn.classList.add('bg-slate-900', 'text-slate-300', 'border-white/10');
-            updateColorIndicators();
+            eraserBtn.classList.remove('bg-slate-300', 'border-t-slate-800');
+            updatePaletteRing();
         };
 
         window.toggleEraser = () => {
             isEraser = !isEraser;
             if (isEraser) {
-                eraserBtn.classList.add('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
-                eraserBtn.classList.remove('bg-slate-900', 'text-slate-300', 'border-white/10');
+                eraserBtn.style.backgroundColor = '#dfdfdf';
+                eraserBtn.style.borderTopColor = '#404040';
+                eraserBtn.style.borderLeftColor = '#404040';
+                eraserBtn.style.borderRightColor = '#ffffff';
+                eraserBtn.style.borderBottomColor = '#ffffff';
             } else {
-                eraserBtn.classList.remove('bg-pink-500/20', 'text-pink-400', 'border-pink-500/30');
-                eraserBtn.classList.add('bg-slate-900', 'text-slate-300', 'border-white/10');
+                eraserBtn.style.backgroundColor = '#c0c0c0';
+                eraserBtn.style.borderTopColor = '#ffffff';
+                eraserBtn.style.borderLeftColor = '#ffffff';
+                eraserBtn.style.borderRightColor = '#404040';
+                eraserBtn.style.borderBottomColor = '#404040';
             }
-            updateColorIndicators();
         };
 
         window.undo = () => {
             if (historyStack.length > 0) {
-                let previousState = historyStack.pop();
                 let img = new Image();
-                img.onload = function () {
+                img.onload = function() {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0);
                 };
-                img.src = previousState;
+                img.src = historyStack.pop();
             } else {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
         };
 
-        // Initialize indicator
-        updateColorIndicators();
+        function updatePaletteRing() {
+            // Colors UI styling helper
+        }
 
-        // Update Brush Size label on slider change
-        sizePicker.addEventListener('input', (e) => {
-            sizeValue.textContent = `${e.target.value}px`;
-        });
+        sizePicker.oninput = (e) => {
+            sizeValue.textContent = e.target.value + "px";
+        };
 
-        // Drawing event positions
-        function startPosition(e) {
-            saveHistoryState();
+        function startPos(e) {
+            saveHistory();
             isDrawing = true;
             draw(e);
         }
-        function endPosition() {
+        function endPos() {
             isDrawing = false;
             ctx.beginPath();
         }
-
         function draw(e) {
             if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
@@ -444,8 +755,8 @@
             const y = (clientY - rect.top) * scaleY;
 
             ctx.lineWidth = sizePicker.value;
-            // Draw slate-950 background color if erasing
-            ctx.strokeStyle = isEraser ? '#020617' : currentColor;
+            // Draw standard white canvas background colour if erasing
+            ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -453,48 +764,48 @@
             ctx.moveTo(x, y);
         }
 
-        // Canvas Handlers
-        canvas.addEventListener('mousedown', startPosition);
-        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousedown', startPos);
+        canvas.addEventListener('mouseup', endPos);
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); }, { passive: false });
-        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPos(e); }, { passive: false });
+        canvas.addEventListener('touchend', endPos);
         canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
-        
+
         document.getElementById('clearDrawBtn').addEventListener('click', () => {
-            saveHistoryState();
+            saveHistory();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
 
-        // --- SUBMITTING COMMENT & DRAWING LOGIC ---
-        
-        // Text submit
+
+        // --- FIREBASE SUBMISSIONS ---
+
+        // Submit Text
         document.getElementById('sendTextBtn').addEventListener('click', async () => {
-            const textInput = document.getElementById('anonText').value;
-            if (!textInput.trim()) return alert("Write something first!");
+            const input = document.getElementById('anonText');
+            const text = input.value;
+            if (!text.trim()) return alert("Write something in notepad first!");
 
             try {
                 await addDoc(collection(db, "guestbook"), {
                     type: "text",
-                    content: textInput,
+                    content: text,
                     timestamp: serverTimestamp()
                 });
-                document.getElementById('anonText').value = ''; 
-            } catch (e) {
-                console.error("Firebase Error:", e);
-                alert("Something went wrong with submission.");
+                input.value = '';
+            } catch (err) {
+                console.error("Firebase write error:", err);
+                alert("Database connection offline.");
             }
         });
 
-        // Drawing submit
+        // Submit Drawing
         document.getElementById('sendDrawBtn').addEventListener('click', async () => {
-            // Convert drawing to base64 encoding
             const imageData = canvas.toDataURL("image/png");
-            
-            // Basic detection if canvas is blank
+
+            // Check if drawing canvas is blank
             const buffer = new Uint32Array(ctx.getImageData(0,0,canvas.width,canvas.height).data.buffer);
             const isBlank = !buffer.some(color => color !== 0);
-            if (isBlank) return alert("Canvas is empty! Draw something first.");
+            if (isBlank) return alert("The drawing file is blank. Paint something first!");
 
             try {
                 await addDoc(collection(db, "guestbook"), {
@@ -502,95 +813,83 @@
                     content: imageData,
                     timestamp: serverTimestamp()
                 });
-                ctx.clearRect(0, 0, canvas.width, canvas.height); 
-                historyStack = []; // Reset history stack on save
-            } catch (e) {
-                console.error("Firebase Error:", e);
-                alert("Something went wrong with submission.");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                historyStack = [];
+                alert("Drawing saved successfully to gallery.exe!");
+            } catch (err) {
+                console.error("Firebase write error:", err);
+                alert("Database connection offline.");
             }
         });
 
-        // --- REAL-TIME GUESTBOOK RETRIEVAL & RENDERING ---
-        const guestbookFeed = document.getElementById('guestbook-feed');
-        const feedLoader = document.getElementById('feed-loader');
-        const feedCounter = document.getElementById('feed-counter');
 
-        // Query last 20 guestbook entries, ordered by timestamp
+        // --- REAL-TIME DATABASE RETRIEVAL ---
+        const feed = document.getElementById('guestbook-feed');
+        const counterEl = document.getElementById('feed-counter');
+
         const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"), limit(25));
         
         onSnapshot(q, (snapshot) => {
-            // Remove the loading screen
-            if (feedLoader) feedLoader.style.display = 'none';
-            
-            // Clear current list items
-            guestbookFeed.innerHTML = '';
-            
+            feed.innerHTML = '';
             let count = 0;
-            snapshot.forEach((doc) => {
+            
+            snapshot.forEach(doc => {
                 count++;
-                const data = doc.data();
+                const item = doc.data();
                 
-                // Format relative or pretty date
-                let timeStr = "Recent";
-                if (data.timestamp) {
-                    const date = data.timestamp.toDate();
-                    timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " - " + date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+                let dateStr = "Recent";
+                if (item.timestamp) {
+                    const date = item.timestamp.toDate();
+                    dateStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " - " + date.toLocaleDateString([], { month: 'short', day: 'numeric' });
                 }
 
-                // Create the card element
-                const entryCard = document.createElement('div');
-                entryCard.className = "p-3 bg-white/5 border border-white/5 hover:border-white/10 rounded-xl flex flex-col gap-1.5 transition-all duration-200 animate-fadeIn";
+                const post = document.createElement('div');
+                post.className = "p-2 bg-slate-100 win-border-in flex flex-col gap-1 text-[11px] font-mono leading-tight";
                 
-                let headerContent = '';
-                if (data.type === 'text') {
-                    headerContent = `
-                        <div class="flex items-center justify-between text-[10px] font-bold text-slate-400">
-                            <span class="text-violet-400"><i class="fa-regular fa-message mr-1"></i> Text Note</span>
-                            <span>${timeStr}</span>
+                if (item.type === 'text') {
+                    post.innerHTML = `
+                        <div class="flex items-center justify-between text-[10px] text-blue-900 border-b border-dashed border-slate-300 pb-0.5">
+                            <span class="font-bold"><i class="fa-regular fa-comment mr-1"></i> MSG.TXT</span>
+                            <span>${dateStr}</span>
                         </div>
-                        <p class="text-xs text-white leading-relaxed font-semibold break-words whitespace-pre-wrap">${escapeHtml(data.content)}</p>
+                        <p class="text-black break-words font-semibold mt-1 whitespace-pre-wrap">${escapeHtml(item.content)}</p>
                     `;
-                } else if (data.type === 'drawing') {
-                    headerContent = `
-                        <div class="flex items-center justify-between text-[10px] font-bold text-slate-400">
-                            <span class="text-pink-400"><i class="fa-solid fa-palette mr-1"></i> Sketch</span>
-                            <span>${timeStr}</span>
+                } else if (item.type === 'drawing') {
+                    post.innerHTML = `
+                        <div class="flex items-center justify-between text-[10px] text-pink-700 border-b border-dashed border-slate-300 pb-0.5">
+                            <span class="font-bold"><i class="fa-solid fa-palette mr-1"></i> SKETCH.BMP</span>
+                            <span>${dateStr}</span>
                         </div>
-                        <div class="mt-1 bg-slate-950/90 rounded-lg p-1.5 border border-white/5">
-                            <img src="${data.content}" alt="Visitor Sketch" class="max-h-36 w-auto mx-auto object-contain rounded">
+                        <div class="mt-1 bg-white p-1 win-border-in max-w-full overflow-hidden flex justify-center">
+                            <img src="${item.content}" alt="Sketch" class="max-h-24 w-auto object-contain">
                         </div>
                     `;
                 }
 
-                entryCard.innerHTML = headerContent;
-                guestbookFeed.appendChild(entryCard);
+                feed.appendChild(post);
             });
 
-            // If empty guestbook
+            counterEl.textContent = `${count} entries`;
+
             if (count === 0) {
-                guestbookFeed.innerHTML = `
-                    <div class="h-full flex flex-col items-center justify-center text-slate-500 text-center p-6">
-                        <i class="fa-solid fa-feather-pointed text-2xl mb-2 text-slate-600"></i>
-                        <p class="text-xs font-bold uppercase tracking-wider">No signs left yet</p>
-                        <p class="text-[10px] mt-0.5">Be the very first to write or draw!</p>
+                feed.innerHTML = `
+                    <div class="text-center py-6 text-slate-500">
+                        <p class="font-bold">No messages found.</p>
+                        <p class="text-[10px] mt-0.5">Start typing above to post!</p>
                     </div>
                 `;
-                feedCounter.textContent = "0 entries";
-            } else {
-                feedCounter.textContent = `${count} entries`;
             }
         }, (error) => {
-            console.error("Listen failed:", error);
-            if (feedLoader) {
-                feedLoader.innerHTML = `
-                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-xl"></i>
-                    <p class="text-xs font-bold text-slate-400 mt-1">Permission Denied / Connection Failed</p>
-                    <p class="text-[9px] text-slate-500">Could not read from database. Check Firestore rules.</p>
-                `;
-            }
+            console.error("Firestore database read failed:", error);
+            feed.innerHTML = `
+                <div class="text-center py-6 text-red-700">
+                    <p class="font-bold">NETWORK ERROR</p>
+                    <p class="text-[10px] mt-0.5">Database offline or permission denied.</p>
+                </div>
+            `;
         });
 
-        // Basic HTML Escaper for security
+        // Protection helper against script injections
         function escapeHtml(str) {
             return str.replace(/&/g, "&amp;")
                       .replace(/</g, "&lt;")
